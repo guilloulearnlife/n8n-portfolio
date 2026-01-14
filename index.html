@@ -15,6 +15,9 @@
       --muted: #9ca3af;
       --card: #111827;
       --border: #1f2937;
+      --cameroon-green: #007a3d;
+      --cameroon-red: #ce1126;
+      --cameroon-yellow: #fcd116;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -568,16 +571,21 @@
         Je crée des workflows <span class="highlight">n8n intelligents</span> qui éliminent les tâches répétitives et fiabilisent vos données.
       </h1>
       <p class="hero-sub">
-        Freelance en automatisation n8n basé en Allemagne, 
-        spécialisé dans les workflows business pour PME africaines : 
-        WhatsApp Business, Mobile Money, base de données et agents IA.
-      </p>
-      <div class="hero-tags">
-        <span class="hero-tag">n8n self‑hosted (Docker, Ubuntu)</span>
-        <span class="hero-tag">base de données & APIs</span>
-        <span class="hero-tag">Agents IA & automatisation intelligente</span>
-        <span class="hero-tag">Intégrations Twilio, Google, Notion, etc.</span>
+       Freelance en automatisation n8n basé en Allemagne, 
+       spécialisé dans les <strong style="color: #22c55e;">PME camerounaises</strong> : 
+      <strong>MTN Mobile Money, Orange Money</strong>, 
+       WhatsApp Business, gestion automatique de stock et agents IA.
+    </p>
+
+        <div class="hero-tags">
+          <span class="hero-tag">🇨🇲 MTN MoMo & Orange Money</span>
+         <span class="hero-tag">💬 WhatsApp Business API</span>
+         <span class="hero-tag">📦 Stock & commandes auto</span>
+         <span class="hero-tag">🚚 Suivi livraison GPS</span>
+         <span class="hero-tag">n8n self-hosted (Docker)</span>
+        <span class="hero-tag">Agents IA (LLM)</span>
       </div>
+
       <div class="hero-actions">
         <button class="btn-primary" onclick="document.getElementById('projets').scrollIntoView({behavior:'smooth'})">
           Voir les workflows
@@ -688,6 +696,23 @@
           <span class="service-tag">Résumé & réponse</span>
         </div>
       </article>
+
+      <article class="service-card" style="border-left: 3px solid #007a3d; background: radial-gradient(circle at top, rgba(0, 122, 61, 0.08), rgba(15, 23, 42, 0.96));">
+  <div class="service-icon">💰</div>
+  <h3>🇨🇲 Mobile Money Cameroun</h3>
+  <p>
+    Intégration <strong>MTN Mobile Money et Orange Money</strong> : 
+    vérification automatique des paiements, réconciliation comptable instantanée,
+    et notifications client SMS/WhatsApp en temps réel.
+  </p>
+  <div class="service-tags">
+    <span class="service-tag">MTN MoMo API</span>
+    <span class="service-tag">Orange Money</span>
+    <span class="service-tag">Webhook paiements</span>
+    <span class="service-tag">Comptabilité auto</span>
+  </div>
+</article>
+      
     </div>
   </section>
 
@@ -753,6 +778,29 @@
           Résultat typique&nbsp;: meilleure réactivité, visibilité claire sur les leads et plus de conversions à effort constant.
         </p>
       </article>
+
+      <!-- Workflow 4 - CAMEROUN -->
+<article class="project-card" style="border: 2px solid #007a3d;">
+  <span class="project-pill" style="background: #007a3d; color: white;">Workflow 04 · 🇨🇲 Cameroun</span>
+  <h3>Boutique WhatsApp + Mobile Money</h3>
+  <div class="project-meta">
+    <span>Objectif&nbsp;:</span> Boutique complète sans site web, 100% via WhatsApp et MoMo
+  </div>
+  <ul class="project-list">
+    <li><strong>Contexte&nbsp;:</strong> Boutique à Douala, 150+ commandes/mois via WhatsApp, 
+        paiements MTN/Orange, gestion manuelle chronophage.</li>
+    <li><strong>Solution&nbsp;:</strong> Catalogue produits automatisé sur WhatsApp, 
+        prise de commande, vérification paiement Mobile Money en temps réel, 
+        notification livreur + client, mise à jour stock automatique.</li>
+    <li><strong>Stack&nbsp;:</strong> n8n + WhatsApp Business API + MTN MoMo API + 
+        Orange Money API + Google Sheets (stock) + Twilio SMS.</li>
+  </ul>
+  <p class="project-footer">
+    <strong>Résultat réel:</strong> 200+ commandes/mois, <strong>0 erreur paiement</strong>, 
+    économie de <strong>20h/semaine</strong>, +35% CA.
+  </p>
+</article>
+      
     </div>
   </section>
 
@@ -793,6 +841,126 @@
       </aside>
     </div>
   </section>
+
+  <!-- TARIFS CAMEROUN -->
+<section id="tarifs" style="background: rgba(0, 122, 61, 0.05); border-radius: 1rem; padding: 3rem 2rem; margin: 2rem 0;">
+  <div class="section-label">💰 TARIFS CAMEROUN</div>
+  <h2 class="section-title">Forfaits adaptés aux PME camerounaises</h2>
+  <p class="section-intro">
+    Paiement flexible : Mobile Money (MTN/Orange), virement bancaire, ou échelonné sur 2 mois.
+  </p>
+  
+  <div class="projects-grid">
+    <article class="project-card">
+      <span class="project-pill">🌱 Starter</span>
+      <h3 style="margin: 0.5rem 0;">250.000 FCFA</h3>
+      <div style="font-size: 0.75rem; color: #22c55e; margin-bottom: 1rem;">~380 EUR</div>
+      <ul class="project-list">
+        <li>1 workflow automatisé simple</li>
+        <li>Formation 2h en français</li>
+        <li>Documentation complète</li>
+        <li>Support WhatsApp 1 mois</li>
+      </ul>
+      <p class="project-footer">Idéal pour : Automatisation leads ou paiements</p>
+    </article>
+    
+    <article class="project-card" style="border: 2px solid #4f46e5;">
+      <span class="project-pill" style="background: #4f46e5; color: white;">⭐ Business · Populaire</span>
+      <h3 style="margin: 0.5rem 0;">500.000 FCFA</h3>
+      <div style="font-size: 0.75rem; color: #22c55e; margin-bottom: 1rem;">~760 EUR</div>
+      <ul class="project-list">
+        <li><strong>3 workflows interconnectés</strong></li>
+        <li><strong>Intégration Mobile Money complète</strong></li>
+        <li>WhatsApp Business + SMS</li>
+        <li>Formation 4h + suivi terrain</li>
+        <li>Support prioritaire 3 mois</li>
+      </ul>
+      <p class="project-footer">Idéal pour : E-commerce, restaurants, services</p>
+    </article>
+    
+    <article class="project-card">
+      <span class="project-pill">💎 Enterprise</span>
+      <h3 style="margin: 0.5rem 0;">Sur devis</h3>
+      <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 1rem;">À partir de 1M FCFA</div>
+      <ul class="project-list">
+        <li>Workflows illimités + API customs</li>
+        <li>Infrastructure dédiée (serveur)</li>
+        <li>Formation équipe complète</li>
+        <li>Support 24/7 WhatsApp + Tel</li>
+        <li>Maintenance 12 mois incluse</li>
+      </ul>
+      <p class="project-footer">Idéal pour : Chaînes de magasins, distributeurs</p>
+    </article>
+  </div>
+
+  <div style="text-align: center; margin-top: 2rem; padding: 1rem; background: rgba(15, 23, 42, 0.9); border-radius: 0.5rem;">
+    <p style="color: #22c55e; font-weight: 600; margin-bottom: 0.5rem;">✅ Garantie satisfait ou remboursé 30 jours</p>
+    <p style="font-size: 0.85rem; color: #9ca3af;">Premier versement 40% au démarrage · Solde après livraison et formation</p>
+  </div>
+</section>
+
+  <!-- FAQ CAMEROUN -->
+<section id="faq">
+  <div class="section-label">❓ FAQ CAMEROUN</div>
+  <h2 class="section-title">Questions fréquentes des PME camerounaises</h2>
+  
+  <div style="display: grid; gap: 1rem; max-width: 48rem; margin: 0 auto;">
+    <details style="background: rgba(15, 23, 42, 0.96); padding: 1.2rem; border-radius: 0.8rem; border-left: 4px solid #007a3d; cursor: pointer;">
+      <summary style="font-weight: 600; color: #22c55e; font-size: 0.95rem;">
+        💰 Compatible MTN et Orange Money?
+      </summary>
+      <p style="margin-top: 0.8rem; color: #9ca3af; line-height: 1.6;">
+        <strong style="color: #22c55e;">Oui, 100% compatible.</strong> Intégration complète via API officielle MTN MoMo et Orange Money. 
+        Vérification automatique des paiements en moins de 5 secondes.
+      </p>
+    </details>
+    
+    <details style="background: rgba(15, 23, 42, 0.96); padding: 1.2rem; border-radius: 0.8rem; cursor: pointer;">
+      <summary style="font-weight: 600; color: #22c55e; font-size: 0.95rem;">
+        📶 Besoin de connexion internet stable?
+      </summary>
+      <p style="margin-top: 0.8rem; color: #9ca3af; line-height: 1.6;">
+        Workflows hébergés sur serveurs cloud européens (99,9% uptime). Fonctionnent même avec 
+        <strong>coupures internet temporaires</strong> - synchronisation automatique au retour de connexion.
+      </p>
+    </details>
+    
+    <details style="background: rgba(15, 23, 42, 0.96); padding: 1.2rem; border-radius: 0.8rem; cursor: pointer;">
+      <summary style="font-weight: 600; color: #22c55e; font-size: 0.95rem;">
+        💳 Comment payer depuis le Cameroun?
+      </summary>
+      <p style="margin-top: 0.8rem; color: #9ca3af; line-height: 1.6;">
+        <strong style="color: #e5e7eb;">3 options:</strong><br>
+        1️⃣ <strong>Mobile Money</strong> (MTN/Orange) - instantané<br>
+        2️⃣ <strong>Virement bancaire</strong> vers compte Cameroun<br>
+        3️⃣ <strong>Western Union / MoneyGram</strong><br>
+        <span style="color: #22c55e;">+ Paiement échelonné possible (40% début / 60% après)</span>
+      </p>
+    </details>
+    
+    <details style="background: rgba(15, 23, 42, 0.96); padding: 1.2rem; border-radius: 0.8rem; cursor: pointer;">
+      <summary style="font-weight: 600; color: #22c55e; font-size: 0.95rem;">
+        ⏱️ Délai de mise en place?
+      </summary>
+      <p style="margin-top: 0.8rem; color: #9ca3af; line-height: 1.6;">
+        <strong>Starter:</strong> 3-5 jours ouvrés<br>
+        <strong>Business:</strong> 1-2 semaines<br>
+        <strong>Enterprise:</strong> 3-4 semaines<br>
+        Formation incluse + 1 mois de support après livraison.
+      </p>
+    </details>
+    
+    <details style="background: rgba(15, 23, 42, 0.96); padding: 1.2rem; border-radius: 0.8rem; cursor: pointer;">
+      <summary style="font-weight: 600; color: #22c55e; font-size: 0.95rem;">
+        📚 Formation en français?
+      </summary>
+      <p style="margin-top: 0.8rem; color: #9ca3af; line-height: 1.6;">
+        <strong style="color: #22c55e;">Oui, 100% en français!</strong> Formation vidéo + session live WhatsApp/Zoom. 
+        Documentation française complète. Support en français par WhatsApp.
+      </p>
+    </details>
+  </div>
+</section>
 
   <!-- CONTACT -->
   <section id="contact">

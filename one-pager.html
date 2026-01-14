@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfolio – Automatisation n8n & Data</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio d'un Data Engineer spécialisé en automatisation avec n8n, IA et pipelines de données." />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.1);
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --card: #111827;
+      --border: #1f2937;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9), transparent);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    .nav {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 10%, #a855f7, #4f46e5);
+      box-shadow: 0 0 20px rgba(79, 70, 229, 0.8);
+    }
+
+    .brand {
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .nav-cta:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.4);
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    section {
+      padding: 3.5rem 0;
+      scroll-margin-top: 72px;
+    }
+
+    /* Hero */
+    #hero {
+      min-height: 70vh;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      #hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 2rem;
+      }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.24), transparent);
+      margin-bottom: 1rem;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    h1 span.highlight {
+      background: linear-gradient(120deg, #a855f7, #4f46e5, #22c55e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      max-width: 32rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.98rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.9), #020617);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #e5e7eb;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 18px 40px rgba(55, 48, 163, 0.5);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 22px 55px rgba(55, 48, 163, 0.7);
+    }
+
+    .btn-ghost {
+      padding: 0.6rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .hero-right {
+      position: relative;
+      padding: 1.25rem;
+    }
+
+    .orb {
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(circle at 20% 0, rgba(79, 70, 229, 0.2), transparent 60%),
+                  radial-gradient(circle at 80% 100%, rgba(34, 197, 94, 0.15), transparent 65%);
+      opacity: 0.9;
+      filter: blur(2px);
+      z-index: -1;
+    }
+
+    .hero-card {
+      border-radius: 1.4rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 1.5rem 1.3rem;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #e5e7eb;
+    }
+
+    .hero-matrix {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .mini-card {
+      border-radius: 0.9rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.16), rgba(15, 23, 42, 0.96));
+      padding: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .mini-card h3 {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-metrics {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-metrics strong {
+      font-size: 1.1rem;
+      color: #e5e7eb;
+    }
+
+    /* Sections */
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-intro {
+      font-size: 0.93rem;
+      max-width: 34rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .service-card {
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 1.2rem 1.1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .service-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .service-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.45rem;
+      color: #e5e7eb;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.6rem;
+    }
+
+    .service-tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--muted);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .projects-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .project-card {
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 1.15rem 1.05rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .project-pill {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #e5e7eb;
+      align-self: flex-start;
+    }
+
+    .project-card h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.15rem;
+      color: #e5e7eb;
+    }
+
+    .project-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .project-meta span {
+      opacity: 0.85;
+    }
+
+    .project-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.4rem 0 0.1rem;
+    }
+
+    .project-list li::before {
+      content: "• ";
+      color: #4f46e5;
+    }
+
+    .project-footer {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* About */
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .about-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text {
+      font-size: 0.92rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.4rem;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+    }
+
+    .about-card {
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 1.2rem 1.1rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .about-card h3 {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      margin-bottom: 0.6rem;
+    }
+
+    .about-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    /* Contact */
+    .contact-inner {
+      border-radius: 1.1rem;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 1.4rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.6rem;
+    }
+
+    footer {
+      padding: 1.7rem 1.5rem 2.4rem;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      background: radial-gradient(circle at 50% 0, rgba(15, 23, 42, 0.9), #020617);
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-dot"></div>
+      <div class="brand">n8n • DATA • IA</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#hero">Accueil</a>
+      <a href="#services">Services</a>
+      <a href="#projets">Projets n8n</a>
+      <a href="#about">À propos</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      Discutons de votre projet
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Automatisation, données & IA
+      </div>
+      <h1>
+        Je crée des workflows <span class="highlight">n8n intelligents</span> qui éliminent les tâches répétitives et fiabilisent vos données.
+      </h1>
+      <p class="hero-sub">
+        Freelance en automatisation n8n basé en Allemagne, 
+        spécialisé dans les workflows business pour PME africaines : 
+        WhatsApp Business, Mobile Money, base de données et agents IA.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">n8n self‑hosted (Docker, Ubuntu)</span>
+        <span class="hero-tag">base de données & APIs</span>
+        <span class="hero-tag">Agents IA & automatisation intelligente</span>
+        <span class="hero-tag">Intégrations Twilio, Google, Notion, etc.</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('projets').scrollIntoView({behavior:'smooth'})">
+          Voir les workflows
+        </button>
+        <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          Planifier un échange
+        </button>
+      </div>
+      <p class="hero-note" style="margin-top:0.9rem;">
+        <strong>Disponible pour projets freelance</strong> (proof of concept, MVP, intégration dans votre stack existante).
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <div class="orb"></div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span>Instantané de mon profil</span>
+          <span class="pill">Data • Automatisation • IA</span>
+        </div>
+        <div class="hero-matrix">
+          <div class="mini-card">
+            <h3>Automatisation métier</h3>
+            <p>
+              Workflows n8n connectant formulaires, CRM, email/SMS et calendriers pour que vos leads ne se perdent plus.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h3>Base de données</h3>
+            <p>
+              Intégration d’APIs et de fichiers (CSV, logs) vers des bases de données ou des dashboards analytiques.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h3>Agents IA</h3>
+            <p>
+              Routage intelligent, classification de messages et génération de réponses avec des modèles de langage.
+            </p>
+          </div>
+          <div class="mini-card">
+            <h3>Infra moderne</h3>
+            <p>
+              n8n self‑hosted, Docker, serveurs Linux et intégration avec les services cloud que vous utilisez déjà.
+            </p>
+          </div>
+        </div>
+        <div class="hero-metrics">
+          <div>
+            <strong>3</strong>
+            <div>Workflows n8n clés prêts à adapter à votre contexte.</div>
+          </div>
+          <div>
+            <strong>+ automatisable</strong>
+            <div>Chaque tâche répétitive est une opportunité d’automatisation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-label">SERVICES</div>
+    <h2 class="section-title">Ce que je peux automatiser pour vous</h2>
+    <p class="section-intro">
+      Je conçois des workflows n8n qui connectent vos outils existants, structurent vos données
+      et introduisent l’IA là où elle apporte une vraie valeur, sans compliquer vos processus.
+    </p>
+    <div class="services-grid">
+      <article class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>Automatisation de processus métier</h3>
+        <p>
+          Orchestration de vos leads, clients et opérations : de la capture initiale jusqu’au suivi,
+          avec notifications et mises à jour dans vos outils (CRM, tableaux, emails).
+        </p>
+        <div class="service-tags">
+          <span class="service-tag">Leads & CRM</span>
+          <span class="service-tag">Email & SMS</span>
+          <span class="service-tag">Calendrier</span>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Pipelines de données & reporting</h3>
+        <p>
+          Centralisation de données provenant d’APIs, de fichiers ou de formulaires, nettoyage automatique
+          et alimentation de bases de données ou dashboards pour un suivi fiable.
+        </p>
+        <div class="service-tags">
+          <span class="service-tag">APIs & CSV</span>
+          <span class="service-tag">Bases de données</span>
+          <span class="service-tag">Dashboards</span>
+        </div>
+      </article>
+
+      <article class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>Agents IA & routage intelligent</h3>
+        <p>
+          Utilisation de modèles de langage pour analyser les messages, prendre des décisions simples,
+          proposer des réponses et router les tâches vers la bonne personne ou le bon système.
+        </p>
+        <div class="service-tags">
+          <span class="service-tag">LLM</span>
+          <span class="service-tag">Classification</span>
+          <span class="service-tag">Résumé & réponse</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projets">
+    <div class="section-label">PROJETS N8N</div>
+    <h2 class="section-title">Trois workflows n8n qui me définissent</h2>
+    <p class="section-intro">
+      Chaque workflow ci‑dessous est pensé comme un “bloc” réutilisable : il peut être adapté
+      à vos outils (CRM, messagerie, base de données) tout en gardant une architecture claire et maintenable.
+    </p>
+    <div class="projects-grid">
+      <!-- Workflow 1 -->
+      <article class="project-card">
+        <span class="project-pill">Workflow 01 · Support & IA</span>
+        <h3>Agent IA pour le support client</h3>
+        <div class="project-meta">
+          <span>Objectif&nbsp;:</span> réduire le temps de traitement des messages entrants (email, formulaires, chat).
+        </div>
+        <ul class="project-list">
+          <li><strong>Contexte&nbsp;:</strong> beaucoup de demandes simples (FAQ, statut, redirections) traitées manuellement.</li>
+          <li><strong>Solution&nbsp;:</strong> n8n récupère les messages, un modèle de langage les analyse, classe la demande
+              et propose une réponse ou crée un ticket avec toutes les informations utiles.</li>
+          <li><strong>Stack&nbsp;:</strong> n8n self‑hosted, connecteur email/chat, API LLM, outil de ticketing/CRM.</li>
+        </ul>
+        <p class="project-footer">
+          Résultat typique&nbsp;: moins de tâches répétitives pour l’équipe et des réponses plus rapides et cohérentes.
+        </p>
+      </article>
+
+      <!-- Workflow 2 -->
+      <article class="project-card">
+        <span class="project-pill">Workflow 02 · Données</span>
+        <h3>Pipeline de données automatisée</h3>
+        <div class="project-meta">
+          <span>Objectif&nbsp;:</span> consolider automatiquement des données éparpillées pour un reporting fiable.
+        </div>
+        <ul class="project-list">
+          <li><strong>Contexte&nbsp;:</strong> données stockées dans plusieurs outils (APIs, fichiers exports, formulaires).</li>
+          <li><strong>Solution&nbsp;:</strong> n8n planifie des extractions (APIs, CSV), applique des règles de nettoyage
+              et met à jour une base de données ou un tableau central utilisé pour les dashboards.</li>
+          <li><strong>Stack&nbsp;:</strong> n8n, APIs (SaaS), fichiers CSV, base de données / tableur, outil de BI.</li>
+        </ul>
+        <p class="project-footer">
+          Résultat typique&nbsp;: moins d’erreurs manuelles, des chiffres alignés et des rapports toujours à jour.
+        </p>
+      </article>
+
+      <!-- Workflow 3 -->
+      <article class="project-card">
+        <span class="project-pill">Workflow 03 · Leads</span>
+        <h3>Automatisation multi‑canal pour les leads</h3>
+        <div class="project-meta">
+          <span>Objectif&nbsp;:</span> ne plus perdre de prospects et améliorer le suivi dès le premier contact.
+        </div>
+        <ul class="project-list">
+          <li><strong>Contexte&nbsp;:</strong> formulaires ou messages entrants sans processus clair de qualification et de suivi.</li>
+          <li><strong>Solution&nbsp;:</strong> n8n capte les leads (formulaire, landing page, chat), les enregistre,
+              déclenche un email ou SMS personnalisé et crée/actualise la fiche dans le CRM ou le tableau de suivi.</li>
+          <li><strong>Stack&nbsp;:</strong> n8n, formulaire ou API, email/SMS, CRM ou Google Sheets / Notion.</li>
+        </ul>
+        <p class="project-footer">
+          Résultat typique&nbsp;: meilleure réactivité, visibilité claire sur les leads et plus de conversions à effort constant.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">À PROPOS</div>
+    <h2 class="section-title">Un profil orienté automatisation et données</h2>
+    <div class="about-layout">
+      <div class="about-text">
+        <p>
+          Étudiant en informatique / data basé en Allemagne, je me spécialise dans la création de workflows n8n
+          auto‑hébergés, en combinant automatisation de processus métier, pipelines de données et intégrations IA.
+        </p>
+        <p>
+          J’aime particulièrement transformer des tâches répétitives en systèmes fiables&nbsp;: chaque nouvelle
+          automatisation est conçue comme un composant réutilisable, documenté et simple à faire évoluer.
+        </p>
+        <p>
+          Côté technique, je travaille avec des serveurs Linux (Ubuntu), Docker, n8n self‑hosted et des services cloud
+          (APIs, stockage, messagerie, outils collaboratifs). Mon objectif&nbsp;: construire des automatisations utiles,
+          compréhensibles par l’équipe métier et alignées sur vos données.
+        </p>
+        <div class="chip-row">
+          <span class="chip">n8n self‑hosted</span>
+          <span class="chip">Docker & Linux</span>
+          <span class="chip">APIs & webhooks</span>
+          <span class="chip">Modèles de langage (IA)</span>
+          <span class="chip">Pipelines de données</span>
+        </div>
+      </div>
+      <aside class="about-card">
+        <h3>Ce que vous obtenez en travaillant avec moi</h3>
+        <ul class="about-list">
+          <li>Des workflows documentés et versionnables, que votre équipe peut comprendre et adapter.</li>
+          <li>Une attention particulière à la fiabilité des données et à la gestion des erreurs.</li>
+          <li>Un interlocuteur unique capable de parler technique (APIs, infra) et métier (processus, besoins concrets).</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">CONTACT</div>
+    <h2 class="section-title">Discutons de votre prochain workflow n8n</h2>
+    <div class="contact-inner">
+      <p>
+        Que vous souhaitiez automatiser un processus métier précis, centraliser vos données ou explorer un agent IA
+        pour votre support, je peux vous aider à concevoir un premier workflow clair et extensible.
+      </p>
+      <p>
+        Envoyez‑moi quelques lignes sur votre contexte (outils utilisés, volume, problème actuel) et je reviendrai vers vous
+        avec des pistes d’automatisation possibles.
+      </p>
+      <div class="contact-actions">
+        <!-- Remplace ces liens par tes vrais contacts -->
+        <a href="mailto:tsomegaguilloumartial@gmail.com" class="btn-primary">Écrire un email</a>
+        <a href="https://www.linkedin.com/in/tsomega-guillou-martial-636195216" target="_blank" rel="noopener" class="btn-ghost">
+          Voir mon profil LinkedIn
+        </a>
+      </div>
+      <p style="font-size:0.8rem;color:#6b7280;">
+        Possibilité d’échanger en français ou allemand selon vos préférences.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> – Portfolio d’automatisation n8n & data. Construit avec HTML & CSS.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

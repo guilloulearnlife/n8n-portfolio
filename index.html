@@ -12,7 +12,7 @@
       --accent: #4f46e5;
       --accent-soft: rgba(79, 70, 229, 0.1);
       --text: #f9fafb;
-      --muted: #d1d5db; /* Contrast renforcé */
+      --muted: #d1d5db; 
       --card: #111827;
       --border: #1f2937;
       --cameroon-green: #007a3d;
@@ -184,6 +184,7 @@
     </div>
     <nav class="nav-links">
       <a href="#services">Services</a>
+      <a href="#tech">Technologie</a>
       <a href="#projets">Workflows</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#faq">FAQ</a>
@@ -198,7 +199,8 @@
       <div class="eyebrow"><span class="eyebrow-dot"></span> Disponible pour projets freelance</div>
       <h1>L'automatisation <span>intelligente</span> pour booster votre PME.</h1>
       <p class="hero-sub">
-        Expert en automatisation basé en Allemagne, j'accompagne les entreprises au <strong>Cameroun</strong> 🇨🇲 dans leur transformation digitale. Intégration <strong>MTN MoMo, Orange Money</strong> et WhatsApp.
+        Expert en automatisation, j'aide les PME au <strong>Cameroun</strong> 🇨🇲 à doubler leur productivité. 
+        Intégration <strong>MTN MoMo & Orange Money</strong> via <strong>n8n + Evolution API</strong>.
       </p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="document.getElementById('projets').scrollIntoView()">Voir mes réalisations</button>
@@ -210,6 +212,40 @@
           <code style="font-size: 0.8rem; color: var(--accent);">// WORKFLOW_STATUS: ACTIVE<br>Execute: WhatsApp_Order -> Check_MoMo_Payment -> Update_Stock_GSheet</code>
           <div style="margin-top: 1rem; font-size: 2rem;">⚙️ ➔ 📱 ➔ 💰</div>
       </div>
+    </div>
+  </section>
+
+  <section id="tech" class="py-16">
+    <h2 class="section-title">Ma Technologie de Pointe</h2>
+    <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 2rem; padding: 3rem;">
+        <div class="projects-grid" style="align-items: center;">
+            <div style="text-align: left;">
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">L'alliance n8n + Evolution API</h3>
+                <p style="color: var(--muted); margin-bottom: 1.5rem;">
+                    J'utilise les outils les plus performants du marché pour garantir stabilité et rapidité à votre business.
+                </p>
+                <ul class="project-list">
+                    <li><strong>Zéro frais par message :</strong> Contrairement aux solutions Meta classiques, aucun surcoût par envoi.</li>
+                    <li><strong>Vitesse Instantanée :</strong> Le bot répond à vos clients en moins de 2 secondes.</li>
+                    <li><strong>Indépendance :</strong> Vos données clients sont sécurisées et votre système reste autonome.</li>
+                </ul>
+            </div>
+            
+            <div style="background: #000; border-radius: 1rem; padding: 1.5rem; font-family: monospace; font-size: 0.8rem; box-shadow: 0 0 30px rgba(79, 70, 229, 0.2);">
+                <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+                </div>
+                <p style="color: #6ee7b7;">// Connexion Evolution API</p>
+                <p style="color: #f9fafb;">const bot = Evolution.createInstance('Boutique_Douala');</p>
+                <p style="color: #6ee7b7;">// n8n Trigger : Message_Received</p>
+                <p style="color: #f9fafb;">if (msg.text === "Prix") {</p>
+                <p style="color: #818cf8;">&nbsp;&nbsp;await n8n.workflow("Fetch_Stock_GSheet");</p>
+                <p style="color: #818cf8;">&nbsp;&nbsp;await bot.sendMessage(msg.from, "Voici nos tarifs...");</p>
+                <p style="color: #f9fafb;">}</p>
+            </div>
+        </div>
     </div>
   </section>
 
@@ -257,11 +293,6 @@
       </article>
     </div>
   </section>
-
-  <p class="hero-sub">
-    Expert en automatisation, j'aide les PME au <strong>Cameroun</strong> 🇨🇲 à doubler leur productivité. 
-    Intégration <strong>MTN MoMo & Orange Money</strong> : recevez vos paiements en toute sécurité, sans lever le petit doigt.
-</p>
 
 <section id="tarifs" style="background: rgba(34, 197, 94, 0.05); padding: 5rem 1.5rem; border-radius: 2rem; margin-top: 2rem;">
   <h2 class="section-title">Investissez dans votre croissance</h2>

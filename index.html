@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Expert n8n & Automatisation – Solutions PME Cameroun</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="description" content="Spécialiste automatisation n8n, intégration MTN/Orange Money et WhatsApp Business pour les entreprises au Cameroun." />
   <style>
     :root {
@@ -21,32 +21,37 @@
       --success: #22c55e;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+    /* CORRECTION : Blocage de l'espace blanc horizontal */
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
     }
 
-    a { color: inherit; text-decoration: none; }
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden; /* Empêche de glisser sur les côtés */
+      background: #020617;
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
 
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(16px);
-      background: rgba(2, 6, 23, 0.8);
+      background: rgba(2, 6, 23, 0.9);
       border-bottom: 1px solid var(--border);
+      width: 100%;
     }
 
     .nav {
-      max-width: 1040px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 1rem 1.5rem;
+      padding: 0.8rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -54,124 +59,109 @@
 
     .nav-left { display: flex; align-items: center; gap: 0.8rem; }
     .logo-dot {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), #a855f7);
-      box-shadow: 0 0 15px rgba(79, 70, 229, 0.6);
     }
 
-    .brand { font-weight: 700; letter-spacing: 1px; font-size: 0.9rem; }
-
-    .nav-links { display: flex; gap: 1.5rem; font-size: 0.85rem; }
-    .nav-links a { transition: color 0.3s; color: var(--muted); }
-    .nav-links a:hover { color: var(--text); }
+    .brand { font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; }
 
     .nav-cta {
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 999px;
       border: 1px solid var(--accent);
       background: var(--accent-soft);
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.3s;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: 0.3s;
     }
-    .nav-cta:hover { background: var(--accent); color: white; }
 
-    main { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
+    main { 
+      width: 100%;
+      max-width: 1100px; 
+      margin: 0 auto; 
+      padding: 0 1rem; 
+    }
 
-    section { padding: 5rem 0; }
+    section { padding: 4rem 0; width: 100%; }
 
-    /* Hero Section */
+    /* Hero Section Responsive */
     #hero {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
       align-items: center;
-      min-height: 80vh;
+      min-height: 70vh;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      background: rgba(79, 70, 229, 0.1);
-      border: 1px solid rgba(79, 70, 229, 0.3);
-      margin-bottom: 1.5rem;
+    @media (max-width: 860px) {
+      #hero { grid-template-columns: 1fr; text-align: center; padding-top: 2rem; }
+      .hero-actions { justify-content: center; }
+      .hero-code-box { display: none; } /* On cache le code complexe sur petit mobile */
     }
 
-    .eyebrow-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 10px var(--success); }
+    h1 { font-size: clamp(2rem, 8vw, 3rem); line-height: 1.2; margin-bottom: 1.5rem; }
+    h1 span { background: linear-gradient(to right, #818cf8, #4ade80); -webkit-background-clip: text; color: transparent; }
 
-    h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
-    h1 span { background: linear-gradient(to right, #818cf8, #c084fc, #4ade80); -webkit-background-clip: text; color: transparent; }
+    .hero-sub { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
 
-    .hero-sub { font-size: 1.1rem; margin-bottom: 2rem; }
+    .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
 
-    .hero-actions { display: flex; gap: 1rem; margin-top: 2rem; }
     .btn-primary { 
-      padding: 0.8rem 2rem; border-radius: 999px; background: var(--accent); color: white; font-weight: 600; 
-      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); transition: 0.3s; border: none; cursor: pointer;
+      padding: 0.8rem 1.5rem; border-radius: 999px; background: var(--accent); color: white; border: none; font-weight: 600; cursor: pointer;
     }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(79, 70, 229, 0.4); }
 
-    /* Cards & Grid */
-    .section-title { font-size: 2rem; margin-bottom: 3rem; text-align: center; }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    /* Grilles adaptatives */
+    .projects-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 1.5rem; 
+      width: 100%;
+    }
 
     .project-card, .service-card {
-      background: rgba(17, 24, 39, 0.5);
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    .project-card:hover, .service-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--accent);
-      background: rgba(17, 24, 39, 0.8);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    /* Tarifs Section Corrigée */
+    #tarifs {
+      background: rgba(34, 197, 94, 0.05);
+      border-radius: 2rem;
+      padding: 3rem 1.2rem;
+      margin: 2rem 0;
+      width: 100%;
     }
 
-    .project-card::before {
-      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--cameroon-green);
+    .price-card-popular {
+      border: 2px solid var(--accent) !important;
+      transform: scale(1); /* Reset scale pour mobile */
+      background: rgba(79, 70, 229, 0.05);
     }
 
-    .project-pill { 
-      display: inline-block; padding: 0.2rem 0.8rem; border-radius: 999px; font-size: 0.7rem; 
-      background: var(--cameroon-green); color: white; margin-bottom: 1rem;
+    @media (min-width: 1024px) {
+      .price-card-popular { transform: scale(1.05); }
     }
 
-    .project-list { list-style: none; margin: 1.5rem 0; }
-    .project-list li { margin-bottom: 0.5rem; font-size: 0.9rem; padding-left: 1.2rem; position: relative; }
-    .project-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+    .project-list { list-style: none; margin: 1.5rem 0; flex-grow: 1; }
+    .project-list li { font-size: 0.9rem; padding-left: 1.2rem; position: relative; margin-bottom: 0.6rem; }
+    .project-list li::before { content: "✓"; position: absolute; left: 0; color: var(--success); }
+
+    .whatsapp-float {
+      position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white;
+      width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1000;
+    }
 
     /* FAQ */
-    details { background: var(--card); padding: 1rem 1.5rem; border-radius: 1rem; margin-bottom: 1rem; cursor: pointer; border: 1px solid var(--border); }
-    summary { font-weight: 600; color: var(--success); }
-    details p { margin-top: 1rem; font-size: 0.9rem; color: var(--muted); }
-
-    /* WhatsApp Button */
-    .whatsapp-float {
-      position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white;
-      width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 1000; transition: 0.3s;
-    }
-    .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); background: #128c7e; }
-
-    /* Responsive */
-    @media (max-width: 860px) {
-      #hero { grid-template-columns: 1fr; text-align: center; }
-      .hero-actions { justify-content: center; }
-      .nav-links { display: none; }
-    }
+    details { background: var(--card); padding: 1rem; border-radius: 0.8rem; margin-bottom: 0.8rem; border: 1px solid var(--border); width: 100%; }
+    summary { font-weight: 600; cursor: pointer; color: var(--success); }
   </style>
 </head>
 <body>
@@ -182,13 +172,6 @@
       <div class="logo-dot"></div>
       <div class="brand">N8N • CAMEROUN</div>
     </div>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#tech">Technologie</a>
-      <a href="#projets">Workflows</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#faq">FAQ</a>
-    </nav>
     <button class="nav-cta" onclick="window.location.href='https://wa.me/4915737746304'">Audit Gratuit</button>
   </div>
 </header>
@@ -196,181 +179,93 @@
 <main>
   <section id="hero">
     <div>
-      <div class="eyebrow"><span class="eyebrow-dot"></span> Disponible pour projets freelance</div>
-      <h1>L'automatisation <span>intelligente</span> pour booster votre PME.</h1>
+      <div style="font-size: 0.7rem; color: var(--success); margin-bottom: 1rem;">● DISPONIBLE AU CAMEROUN</div>
+      <h1>L'automatisation <span>intelligente</span> pour PME.</h1>
       <p class="hero-sub">
-        Expert en automatisation, j'aide les PME au <strong>Cameroun</strong> 🇨🇲 à doubler leur productivité. 
-        Intégration <strong>MTN MoMo & Orange Money</strong> via <strong>n8n + Evolution API</strong>.
+        Expert n8n basé en Allemagne. J'automatise vos ventes <strong>WhatsApp</strong> et vos paiements <strong>MoMo/Orange</strong>.
       </p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('projets').scrollIntoView()">Voir mes réalisations</button>
-        <button class="nav-cta" style="padding: 0.8rem 2rem;" onclick="document.getElementById('tarifs').scrollIntoView()">Nos Tarifs</button>
+        <button class="btn-primary" onclick="document.getElementById('tarifs').scrollIntoView()">Voir les Tarifs</button>
       </div>
     </div>
-    <div style="position: relative;">
-      <div style="background: rgba(79, 70, 229, 0.05); border: 2px dashed var(--accent); border-radius: 2rem; padding: 2rem; text-align: center;">
-          <code style="font-size: 0.8rem; color: var(--accent);">// WORKFLOW_STATUS: ACTIVE<br>Execute: WhatsApp_Order -> Check_MoMo_Payment -> Update_Stock_GSheet</code>
-          <div style="margin-top: 1rem; font-size: 2rem;">⚙️ ➔ 📱 ➔ 💰</div>
+    <div class="hero-code-box">
+      <div style="background: rgba(79, 70, 229, 0.1); border: 1px dashed var(--accent); border-radius: 1.5rem; padding: 1.5rem; font-family: monospace; font-size: 0.8rem;">
+          <span style="color: var(--accent);">// STATUS: ACTIVE</span><br>
+          WhatsApp ➔ MoMo ➔ Airtable
       </div>
-    </div>
-  </section>
-
-  <section id="tech" class="py-16">
-    <h2 class="section-title">Ma Technologie de Pointe</h2>
-    <div style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: 2rem; padding: 3rem;">
-        <div class="projects-grid" style="align-items: center;">
-            <div style="text-align: left;">
-                <h3 style="color: var(--accent); margin-bottom: 1rem;">L'alliance n8n + Evolution API</h3>
-                <p style="color: var(--muted); margin-bottom: 1.5rem;">
-                    J'utilise les outils les plus performants du marché pour garantir stabilité et rapidité à votre business.
-                </p>
-                <ul class="project-list">
-                    <li><strong>Zéro frais par message :</strong> Contrairement aux solutions Meta classiques, aucun surcoût par envoi.</li>
-                    <li><strong>Vitesse Instantanée :</strong> Le bot répond à vos clients en moins de 2 secondes.</li>
-                    <li><strong>Indépendance :</strong> Vos données clients sont sécurisées et votre système reste autonome.</li>
-                </ul>
-            </div>
-            
-            <div style="background: #000; border-radius: 1rem; padding: 1.5rem; font-family: monospace; font-size: 0.8rem; box-shadow: 0 0 30px rgba(79, 70, 229, 0.2);">
-                <div style="display: flex; gap: 10px; margin-bottom: 1rem;">
-                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
-                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
-                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
-                </div>
-                <p style="color: #6ee7b7;">// Connexion Evolution API</p>
-                <p style="color: #f9fafb;">const bot = Evolution.createInstance('Boutique_Douala');</p>
-                <p style="color: #6ee7b7;">// n8n Trigger : Message_Received</p>
-                <p style="color: #f9fafb;">if (msg.text === "Prix") {</p>
-                <p style="color: #818cf8;">&nbsp;&nbsp;await n8n.workflow("Fetch_Stock_GSheet");</p>
-                <p style="color: #818cf8;">&nbsp;&nbsp;await bot.sendMessage(msg.from, "Voici nos tarifs...");</p>
-                <p style="color: #f9fafb;">}</p>
-            </div>
-        </div>
     </div>
   </section>
 
   <section id="services">
-    <h2 class="section-title">Mes Services Experts</h2>
+    <h2 style="text-align: center; margin-bottom: 2rem;">Nos Solutions</h2>
     <div class="projects-grid">
       <div class="service-card">
-        <h3>💰 Fintech & Paiements</h3>
-        <p>Réception et vérification automatique des paiements MTN & Orange Money pour vos ventes.</p>
+        <h3>💰 Paiements MoMo</h3>
+        <p style="font-size: 0.9rem; color: var(--muted);">Validation automatique des paiements MTN & Orange Money.</p>
       </div>
       <div class="service-card">
-        <h3>💬 WhatsApp Automation</h3>
-        <p>Création de bots intelligents pour prendre les commandes et répondre aux clients 24/7.</p>
-      </div>
-      <div class="service-card">
-        <h3>📊 Data & Reporting</h3>
-        <p>Synchronisation de vos ventes vers Google Sheets, Notion ou votre CRM automatiquement.</p>
+        <h3>💬 WhatsApp Bot</h3>
+        <p style="font-size: 0.9rem; color: var(--muted);">Réponses et catalogues automatiques via Evolution API.</p>
       </div>
     </div>
   </section>
 
-  <section id="projets">
-    <h2 class="section-title">Workflows qui tournent déjà</h2>
-    <div class="projects-grid">
-      <article class="project-card">
-        <span class="project-pill">E-commerce 🇨🇲</span>
-        <h3>Boutique WhatsApp + MoMo</h3>
-        <ul class="project-list">
-          <li>Encaissement automatisé (API MoMo)</li>
-          <li>Gestion de stock temps réel</li>
-          <li>Notification livreur instantanée</li>
-        </ul>
-        <p style="font-size: 0.8rem; color: var(--success);">Economie : 15 heures / semaine</p>
-      </article>
+  <section id="tarifs">
+    <h2 style="text-align: center; margin-bottom: 1rem;">Tarifs Transparents</h2>
+    <p style="text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 3rem;">Rentabilisez votre business dès le premier mois.</p>
 
-      <article class="project-card">
-        <span class="project-pill">Immobilier</span>
-        <h3>Relance de Leads IA</h3>
+    <div class="projects-grid">
+      <div class="project-card">
+        <span style="color: var(--cameroon-yellow); font-weight: bold; font-size: 0.7rem;">PACK START</span>
+        <h2 style="margin: 1rem 0;">25.000 <span style="font-size: 1rem;">FCFA</span></h2>
         <ul class="project-list">
-          <li>Capture des leads Facebook/Insta</li>
-          <li>Qualification via Agent IA</li>
-          <li>Prise de RDV sur calendrier</li>
+          <li>Sécurité anti-fraude MoMo</li>
+          <li>Alerte WhatsApp instantanée</li>
+          <li>Journal de vente Google Sheets</li>
         </ul>
-        <p style="font-size: 0.8rem; color: var(--success);">Conversion : +25% de RDV</p>
-      </article>
+        <button class="btn-primary" style="background: #334155;" onclick="window.location.href='https://wa.me/4915737746304?text=Pack+Start'">Choisir Start</button>
+      </div>
+
+      <div class="project-card price-card-popular">
+        <span style="color: var(--accent); font-weight: bold; font-size: 0.7rem;">CONSEILLÉ</span>
+        <h2 style="margin: 1rem 0;">65.000 <span style="font-size: 1rem;">FCFA</span></h2>
+        <ul class="project-list">
+          <li><strong>Tout le Pack Start</strong></li>
+          <li>Bot WhatsApp Evolution API</li>
+          <li>Gestion de stock Airtable</li>
+          <li>Paiement en 2 fois possible</li>
+        </ul>
+        <button class="btn-primary" onclick="window.location.href='https://wa.me/4915737746304?text=Pack+Business'">Prendre le contrôle</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 1rem;">
+      <p style="color: var(--success); font-weight: bold;">🧪 TESTEZ SANS RISQUE</p>
+      <p style="font-size: 0.8rem; color: var(--muted);">Remboursement intégral si non satisfait après 7 jours.</p>
     </div>
   </section>
-
-<section id="tarifs" style="background: rgba(34, 197, 94, 0.05); padding: 5rem 1.5rem; border-radius: 2rem; margin-top: 2rem;">
-  <h2 class="section-title">Investissez dans votre croissance</h2>
-  <p style="text-align: center; color: var(--muted); margin-bottom: 3.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-    Choisissez le pack qui correspond à votre volume de vente actuel. 
-    <strong>Rentabilisé dès la première semaine.</strong>
-  </p>
-
-  <div class="projects-grid">
-    <div class="project-card" style="border-top: 4px solid var(--cameroon-yellow); display: flex; flex-direction: column;">
-      <span class="project-pill" style="background: var(--cameroon-yellow); color: #000;">IDÉAL DÉMARRAGE</span>
-      <h3 style="margin-top: 1rem;">Pack "Zéro Arnaque"</h3>
-      <div style="margin: 1.5rem 0;">
-        <h2 style="font-size: 2.5rem; display: inline;">25.000</h2> <small>FCFA</small>
-        <p style="color: var(--success); font-size: 0.8rem; font-weight: bold;">Installation Unique</p>
-      </div>
-      <ul class="project-list" style="flex-grow: 1;">
-        <li>Vérification réelle des paiements MoMo</li>
-        <li>Alerte instantanée sur votre WhatsApp</li>
-        <li>Protection contre les faux SMS</li>
-        <li>Tableau de vente simple (GSheet)</li>
-      </ul>
-      <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-        + 5.000 FCFA/mois (Maintenance & Serveur)
-      </p>
-      <button class="btn-primary" style="width: 100%; background: #374151;" onclick="window.location.href='https://wa.me/4915737746304?text=Je+veux+le+pack+Zero+Arnaque'">Sécuriser mon business</button>
-    </div>
-
-    <div class="project-card" style="border-top: 4px solid var(--accent); transform: scale(1.05); background: rgba(79, 70, 229, 0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 10;">
-      <span class="project-pill" style="background: var(--accent);">BOOSTEZ VOS VENTES</span>
-      <h3 style="margin-top: 1rem;">Pack "Boutique Auto"</h3>
-      <div style="margin: 1.5rem 0;">
-        <h2 style="font-size: 2.5rem; display: inline;">65.000</h2> <small>FCFA</small>
-        <p style="color: var(--accent); font-size: 0.8rem; font-weight: bold;">Payable en 2 fois</p>
-      </div>
-      <ul class="project-list" style="flex-grow: 1;">
-        <li><strong>Tout le pack "Zéro Arnaque"</strong></li>
-        <li>Bot WhatsApp qui vend (Catalogue)</li>
-        <li>Gestion de stock automatique</li>
-        <li>Relance client automatique</li>
-      </ul>
-      <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-        + 10.000 FCFA/mois (Serveur Haute Performance)
-      </p>
-      <button class="btn-primary" style="width: 100%;" onclick="window.location.href='https://wa.me/4915737746304?text=Je+veux+le+pack+Boutique+Auto'">Prendre le contrôle</button>
-    </div>
-  </div>
-
-  <div style="text-align: center; margin-top: 4rem; background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 1rem;">
-    <p style="color: var(--success); font-weight: bold; font-size: 1.1rem;">🧪 TESTEZ SANS RISQUE</p>
-    <p style="font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem;">
-        Si le système ne vous fait pas gagner de temps après 7 jours, <strong>je vous rembourse intégralement</strong>. 
-        Aucune question posée.
-    </p>
-  </div>
-</section>
 
   <section id="faq">
-    <h2 class="section-title">FAQ Cameroun</h2>
+    <h2 style="text-align: center; margin-bottom: 2rem;">Questions</h2>
     <details>
-      <summary>Comment se passe le paiement ?</summary>
-      <p>Paiement flexible : 40% à la commande, 60% après livraison. Acceptés : MTN MoMo, Orange Money, Virement bancaire.</p>
+      <summary>Comment payer ?</summary>
+      <p>Nous acceptons MoMo, Orange Money et les virements.</p>
     </details>
     <details>
-      <summary>Est-ce que ça marche avec les coupures d'internet ?</summary>
-      <p>Oui. Nos serveurs sont basés en Europe. Même si votre téléphone est coupé, le système reçoit les commandes et les traite dès votre retour en ligne.</p>
+      <summary>Et si internet coupe ?</summary>
+      <p>Le système tourne sur nos serveurs en Allemagne. Il reste actif 24h/24.</p>
     </details>
   </section>
 </main>
 
 <footer>
-  <div style="text-align: center; padding: 3rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem;">
-    <p>&copy; 2026 – Expert n8n & Data. Propulsé par l'automatisation.</p>
+  <div style="text-align: center; padding: 2rem; color: var(--muted); font-size: 0.7rem; border-top: 1px solid var(--border);">
+    &copy; 2026 – Expert n8n & Evolution API.
   </div>
 </footer>
 
-<a href="https://wa.me/+4915737746304?text=Bonjour,%20je%20souhaite%20un%20audit%20pour%20mon%20automatisation" class="whatsapp-float" target="_blank">
-  <svg width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+<a href="https://wa.me/4915737746304" class="whatsapp-float">
+  <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
     <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.96L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
   </svg>
 </a>

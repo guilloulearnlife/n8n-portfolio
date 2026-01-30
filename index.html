@@ -985,7 +985,261 @@
       opacity: 1;
       transform: translateY(0);
     }
-  </style>
+  
+  
+/* ===== SECTION CONTACT ===== */
+.contact-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #0f172a 0%, #1a2344 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 60px;
+}
+
+.contact-section .section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.contact-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #ff6b5b 0%, #ff8f6a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-section .section-header p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* FORM STYLES */
+.contact-form {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+}
+
+.form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff6b5b;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 107, 91, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group.checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.form-group.checkbox input {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.form-group.checkbox label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #ff6b5b 0%, #ff8f6a 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 107, 91, 0.4);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-submit.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.btn-submit .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-submit:hover .arrow {
+  transform: translateX(4px);
+}
+
+.form-message {
+  margin-top: 15px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+  display: none;
+}
+
+.form-message.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #86efac;
+}
+
+.form-message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+/* CONTACT INFO STYLES */
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: rgba(255, 107, 91, 0.3);
+  background: rgba(255, 107, 91, 0.05);
+  transform: translateY(-4px);
+}
+
+.info-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.info-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.info-card a,
+.info-card p {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.info-card a:hover {
+  color: #ff6b5b;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-form {
+    padding: 25px;
+  }
+
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</style>
 </head>
 <body>
 
@@ -1583,8 +1837,171 @@
         console.log('CTA clicked:', btn.textContent.trim());
       });
     });
+    
+  // ===== CONTACT FORM HANDLER =====
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      const formMessage = document.getElementById('formMessage');
+      const submitBtn = form.querySelector('.btn-submit');
+      
+      // Récupérer les données
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        company: document.getElementById('company').value,
+        service: document.getElementById('service').value,
+        message: document.getElementById('message').value,
+        timestamp: new Date().toISOString(),
+        source: 'Website Portfolio'
+      };
+
+      // État loading
+      submitBtn.classList.add('loading');
+      submitBtn.innerHTML = 'Envoi en cours...';
+      formMessage.textContent = '';
+      formMessage.classList.remove('success', 'error');
+
+      try {
+        // Remplacer par votre URL webhook n8n
+        const n8nWebhookUrl = 'https://YOUR_N8N_INSTANCE.app.n8n.cloud/webhook/contact-form';
+        
+        const response = await fetch(n8nWebhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+          formMessage.classList.add('success');
+          formMessage.textContent = '✓ Merci ! Votre demande a été reçue. Nous vous répondrons rapidement.';
+          form.reset();
+          
+          // Scroll vers le message
+          formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          
+          // Track conversion
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_submission', {
+              'event_category': 'Contact',
+              'event_label': formData.service
+            });
+          }
+        } else {
+          throw new Error('Erreur serveur');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        formMessage.classList.add('error');
+        formMessage.textContent = '× Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter par WhatsApp.';
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.innerHTML = 'Envoyer ma demande <span class="arrow">→</span>';
+      }
+    });
+  }
   </script>
 
+  
+<!-- SECTION CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Prêt à automatiser votre business ?</h2>
+      <p>Envoyez-nous un message et réservez votre consultation gratuite</p>
+    </div>
+
+    <div class="contact-container">
+      <!-- FORMULAIRE -->
+      <div class="contact-form-wrapper">
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <label for="name">Nom complet *</label>
+            <input type="text" id="name" name="name" required placeholder="Jean Kamdem">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="jean@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Téléphone WhatsApp *</label>
+            <input type="tel" id="phone" name="phone" required placeholder="+237 6XX XXX XXX">
+          </div>
+
+          <div class="form-group">
+            <label for="company">Nom de l'entreprise *</label>
+            <input type="text" id="company" name="company" required placeholder="Votre entreprise">
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service intéressé *</label>
+            <select id="service" name="service" required>
+              <option value="">-- Choisir un service --</option>
+              <option value="Bot WhatsApp">Bot WhatsApp IA</option>
+              <option value="Mobile Money">Intégration Mobile Money</option>
+              <option value="Dashboard">Tableau de bord temps réel</option>
+              <option value="Workflows">Workflows personnalisés</option>
+              <option value="Audit">Audit gratuit</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Votre message *</label>
+            <textarea id="message" name="message" required rows="5" placeholder="Décrivez brièvement votre besoin..."></textarea>
+          </div>
+
+          <div class="form-group checkbox">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy">J'accepte la politique de confidentialité et que mon entreprise me contacte</label>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            Envoyer ma demande
+            <span class="arrow">→</span>
+          </button>
+
+          <div id="formMessage" class="form-message"></div>
+        </form>
+      </div>
+
+      <!-- INFOS CONTACT -->
+      <div class="contact-info">
+        <div class="info-card">
+          <div class="info-icon">📱</div>
+          <h3>WhatsApp</h3>
+          <a href="https://wa.me/4915737746304" target="_blank">+49 157 37746304</a>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">📧</div>
+          <h3>Email</h3>
+          <a href="mailto:contact@example.cm">contact@example.cm</a>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">⏱️</div>
+          <h3>Réponse rapide</h3>
+          <p>Généralement en moins de 2h</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">🎯</div>
+          <h3>Support 24/7</h3>
+          <p>Disponible pour vos questions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </body>
 </html>
 

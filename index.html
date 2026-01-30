@@ -67,24 +67,9 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
-
-      /* --- AJOUT EFFET GRILLE n8n --- */
-      background-image: 
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 45px 45px;
     }
 
-    /* Voile pour atténuer la grille sur les bords */
-    body::after {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 85%);
-      z-index: -2;
-      pointer-events: none;
-    }
-
+    /* --- NOUVEAU : Style pour le fond Canvas --- */
     #canvas3d {
       position: fixed;
       top: 0;
@@ -93,6 +78,21 @@
       height: 100%;
       z-index: -1;
       pointer-events: none;
+    }
+
+    /* L'ancien gradient shift est conservé en superposition très légère si tu le souhaites, 
+       sinon le canvas fera l'essentiel du travail visuel */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+      z-index: -2;
     }
 
     /* Container */
@@ -221,20 +221,7 @@
       background: var(--primary);
       color: white;
       box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
     }
-
-    /* Effet brillance bouton n8n */
-    .btn-primary::after {
-      content: "";
-      position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-      opacity: 0; transition: 0.3s;
-    }
-
-    .btn-primary:hover::after { opacity: 1; }
 
     .btn-primary:hover {
       background: var(--primary-hover);
@@ -263,6 +250,7 @@
       padding: var(--section-padding) 0;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
 
     .hero-badge {
@@ -314,8 +302,134 @@
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Workflow Visualization */
+    .workflow-demo {
+      margin-top: 5rem;
+      position: relative;
+      animation: fadeInUp 1.6s ease;
+    }
+
+    .workflow-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .workflow-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .workflow-node {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .workflow-node:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 107, 74, 0.2);
+    }
+
+    .workflow-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .workflow-node h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .workflow-node p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .workflow-arrow {
+      position: absolute;
+      top: 50%;
+      right: -2rem;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 2rem;
+      animation: arrowPulse 2s infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%, 100% { opacity: 0.5; transform: translateY(-50%) translateX(0); }
+      50% { opacity: 1; transform: translateY(-50%) translateX(5px); }
+    }
+
+    /* Social Proof */
+    .social-proof {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .proof-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .proof-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .proof-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
     /* Section Title */
@@ -353,7 +467,7 @@
       line-height: 1.7;
     }
 
-    /* Feature Grid & Glow */
+    /* Feature Grid */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -361,20 +475,36 @@
     }
 
     .feature-card {
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(10px);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 2.5rem;
       transition: all 0.3s;
       position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
     }
 
     .feature-card:hover {
-      border-color: var(--primary);
+      border-color: var(--border-hover);
       transform: translateY(-5px);
-      box-shadow: 0 0 40px rgba(255, 107, 74, 0.1);
-      background: rgba(15, 23, 42, 0.8);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
     }
 
     .feature-icon {
@@ -400,6 +530,87 @@
       line-height: 1.7;
     }
 
+    /* Comparison Section */
+    .comparison-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-top: 3rem;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .comparison-column h3 {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .comparison-before h3 {
+      color: #EF4444;
+    }
+
+    .comparison-after h3 {
+      color: var(--success);
+    }
+
+    .comparison-list {
+      list-style: none;
+    }
+
+    .comparison-list li {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      border-left: 3px solid;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .comparison-before li {
+      border-color: #EF4444;
+    }
+
+    .comparison-after li {
+      border-color: var(--success);
+    }
+
+    .comparison-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-top: 0.1rem;
+    }
+
+    .comparison-before li::before {
+      content: '✕';
+      color: #EF4444;
+      font-size: 1.1rem;
+    }
+
+    .comparison-after li::before {
+      content: '✓';
+      color: var(--success);
+      font-size: 1.1rem;
+    }
+
     /* Pricing Section */
     .pricing-grid {
       display: grid;
@@ -409,8 +620,7 @@
     }
 
     .pricing-card {
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(10px);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 3rem;
@@ -421,6 +631,7 @@
     .pricing-card:hover {
       transform: translateY(-10px);
       border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(255, 107, 74, 0.2);
     }
 
     .pricing-popular {
@@ -428,10 +639,44 @@
       transform: scale(1.05);
     }
 
+    .pricing-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .pricing-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
     .pricing-price {
       font-size: 3rem;
       font-weight: 900;
       margin-bottom: 0.5rem;
+    }
+
+    .pricing-price span {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pricing-description {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
     }
 
     .pricing-features {
@@ -442,24 +687,221 @@
     .pricing-features li {
       padding: 0.75rem 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.75rem;
       color: var(--text-secondary);
       border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-features li:last-child {
+      border-bottom: none;
     }
 
     .pricing-features li::before {
       content: '✓';
       color: var(--success);
       font-weight: 900;
+      font-size: 1.2rem;
+      flex-shrink: 0;
     }
 
     /* Testimonials */
+    .testimonials-slider {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
     .testimonial-card {
-      background: rgba(15, 23, 42, 0.7);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 2.5rem;
+      position: relative;
+    }
+
+    .testimonial-quote {
+      font-size: 3rem;
+      color: var(--primary);
+      opacity: 0.2;
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+    }
+
+    .testimonial-text {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .testimonial-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .testimonial-stars {
+      color: #FBBF24;
+      margin-top: 0.5rem;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-banner p {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-banner .btn {
+      background: white;
+      color: var(--primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-banner .btn:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+      margin-top: var(--section-padding);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+
+    .social-icon:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-column h4 {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     /* WhatsApp Float */
@@ -475,27 +917,73 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-      z-index: 200;
+      z-index: 100;
       transition: all 0.3s;
+      animation: float 3s ease-in-out infinite;
     }
 
-    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    }
 
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-popular {
+        transform: scale(1);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-arrow {
+        display: none;
+      }
+    }
+
+    /* Loading animation for elements */
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
-      transition: 0.8s ease-out;
+      transition: opacity 0.8s, transform 0.8s;
     }
 
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-    
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2.5rem; }
-      .pricing-popular { transform: scale(1); }
     }
   </style>
 </head>
@@ -514,87 +1002,483 @@
         <div class="logo-icon">n8</div>
         <span>Expert n8n Cameroun</span>
       </div>
+      
       <ul class="nav-links">
         <li><a href="#solutions">Solutions</a></li>
         <li><a href="#workflow">Comment ça marche</a></li>
         <li><a href="#pricing">Tarifs</a></li>
         <li><a href="#testimonials">Témoignages</a></li>
       </ul>
+      
       <div class="nav-cta">
-        <a href="https://wa.me/4915737746304" class="btn btn-primary" target="_blank">Audit gratuit</a>
+        <a href="https://wa.me/4915737746304?text=Je%20veux%20un%20audit%20gratuit" 
+           class="btn btn-primary" 
+           target="_blank" 
+           rel="noopener">
+          Audit gratuit
+        </a>
       </div>
     </nav>
   </header>
 
-  <section class="hero container">
-    <div class="hero-badge">Expert certifié • Basé en Allemagne • Service Cameroun</div>
-    <h1>L'automatisation <span class="gradient-text">AI workflow</span> pour entreprises camerounaises</h1>
-    <p class="hero-subtitle">Déployez l'intelligence artificielle dans votre business avec n8n. De WhatsApp à Mobile Money, automatisez chaque processus.</p>
-    <div class="hero-cta">
-      <a href="#pricing" class="btn btn-primary btn-large">Découvrir nos solutions →</a>
-      <a href="#workflow" class="btn btn-secondary btn-large">Voir une démo</a>
-    </div>
-  </section>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span>✓</span>
+        Expert certifié • Basé en Allemagne • Service Cameroun
+      </div>
+      
+      <h1>
+        L'automatisation <span class="gradient-text">AI workflow</span><br>
+        pour entreprises camerounaises
+      </h1>
+      
+      <p class="hero-subtitle">
+        Déployez l'intelligence artificielle dans votre business avec n8n. 
+        De WhatsApp à Mobile Money, automatisez chaque processus comme les géants tech 
+        - sans équipe technique.
+      </p>
+      
+      <div class="hero-cta">
+        <a href="#pricing" class="btn btn-primary btn-large">
+          Découvrir nos solutions →
+        </a>
+        <a href="#workflow" class="btn btn-secondary btn-large">
+          Voir une démo
+        </a>
+      </div>
 
-  <section id="solutions" class="section container">
-    <div class="section-header">
-      <span class="section-tag">Nos solutions</span>
-      <h2 class="section-title">Automatisez chaque aspect de votre business</h2>
-    </div>
-    <div class="feature-grid">
-      <div class="feature-card fade-in">
-        <div class="feature-icon">🤖</div>
-        <h3>Bots WhatsApp intelligents</h3>
-        <p>Assistants conversationnels IA qui gèrent vos clients 24h/24 sur votre numéro officiel.</p>
-      </div>
-      <div class="feature-card fade-in">
-        <div class="feature-icon">💸</div>
-        <h3>Intégration Mobile Money</h3>
-        <p>Vérification automatique des paiements MTN et Orange Money via API sécurisée.</p>
-      </div>
-      <div class="feature-card fade-in">
-        <div class="feature-icon">📊</div>
-        <h3>Workflows n8n</h3>
-        <p>Connectez vos applications favorites (Sheets, CRM, Emails) en un seul flux.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing" class="section container">
-    <div class="section-header">
-      <h2 class="section-title">Tarifs transparents</h2>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-card fade-in">
-        <div style="color:var(--primary); font-weight:700;">STARTER</div>
-        <div class="pricing-price">25.000 <span>FCFA</span></div>
-        <ul class="pricing-features">
-          <li>Vérification MoMo & Orange</li>
-          <li>Notifications instantanées</li>
-          <li>Support 7 jours</li>
-        </ul>
-        <a href="#" class="btn btn-secondary" style="width:100%; justify-content:center;">Choisir Starter</a>
-      </div>
-      <div class="pricing-card pricing-popular fade-in">
-        <div style="color:var(--primary); font-weight:700;">BUSINESS</div>
-        <div class="pricing-price">65.000 <span>FCFA</span></div>
-        <ul class="pricing-features">
-          <li>Tout du Pack Starter</li>
-          <li>Bot WhatsApp avec IA</li>
-          <li>Workflows personnalisés</li>
-          <li>Support 30 jours</li>
-        </ul>
-        <a href="#" class="btn btn-primary" style="width:100%; justify-content:center;">Démarrer Business</a>
+      <div class="social-proof">
+        <div class="proof-item">
+          <div class="proof-number">50+</div>
+          <div class="proof-label">Entreprises équipées</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">2500+</div>
+          <div class="proof-label">Workflows actifs</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">89%</div>
+          <div class="proof-label">Satisfaction client</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-number">24/7</div>
+          <div class="proof-label">Automatisation</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <a href="https://wa.me/4915737746304" class="whatsapp-float">
-    <svg width="32" height="32" fill="white" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.96L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+  <section id="workflow" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Comment ça fonctionne</span>
+        <h2 class="section-title">De l'idée à l'exécution en quelques clics</h2>
+        <p class="section-description">
+          Workflows visuels puissants qui transforment vos processus métier en automatisations intelligentes
+        </p>
+      </div>
+
+      <div class="workflow-demo">
+        <div class="workflow-container">
+          <div class="workflow-grid">
+            <div class="workflow-node fade-in">
+              <div class="workflow-icon">💬</div>
+              <h4>WhatsApp</h4>
+              <p>Client envoie un message</p>
+              <span class="workflow-arrow">→</span>
+            </div>
+
+            <div class="workflow-node fade-in">
+              <div class="workflow-icon">🤖</div>
+              <h4>AI Agent</h4>
+              <p>Analyse & répond automatiquement</p>
+              <span class="workflow-arrow">→</span>
+            </div>
+
+            <div class="workflow-node fade-in">
+              <div class="workflow-icon">💸</div>
+              <h4>Mobile Money</h4>
+              <p>Vérifie le paiement MoMo</p>
+              <span class="workflow-arrow">→</span>
+            </div>
+
+            <div class="workflow-node fade-in">
+              <div class="workflow-icon">📊</div>
+              <h4>Base de données</h4>
+              <p>Enregistre dans Airtable</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solutions" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Nos solutions</span>
+        <h2 class="section-title">Automatisez chaque aspect de votre business</h2>
+        <p class="section-description">
+          Technologies enterprise adaptées au contexte africain
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🤖</div>
+          <h3>Bots WhatsApp intelligents</h3>
+          <p>
+            Assistants conversationnels alimentés par IA qui gèrent vos clients 24/7. 
+            Qualification de leads, réponses instantanées, prise de commandes automatique 
+            sur votre numéro WhatsApp Business officiel.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">💸</div>
+          <h3>Intégration Mobile Money</h3>
+          <p>
+            Vérification automatique des paiements MTN et Orange Money via API. 
+            Éliminez les captures d'écran falsifiées, réconciliation bancaire instantanée, 
+            notifications en temps réel.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">📊</div>
+          <h3>Tableaux de bord temps réel</h3>
+          <p>
+            Synchronisation automatique avec Google Sheets, Airtable ou Notion. 
+            Visualisez vos KPIs, stock, ventes et performances en direct depuis n'importe où.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🔄</div>
+          <h3>Workflows personnalisés</h3>
+          <p>
+            Connectez +400 applications avec n8n. Email marketing, CRM, facturation, 
+            livraison - orchestrez tout votre écosystème digital sans coder.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🔒</div>
+          <h3>Sécurité enterprise</h3>
+          <p>
+            Hébergement sur serveurs européens ou déploiement on-premise chez vous. 
+            Chiffrement end-to-end, conformité RGPD, backups automatiques.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">📈</div>
+          <h3>Scaling intelligent</h3>
+          <p>
+            Infrastructure qui grandit avec vous. De 10 à 10,000 transactions par jour, 
+            performances garanties avec monitoring et alertes proactives.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Transformation</span>
+        <h2 class="section-title">Avant vs Après l'automatisation</h2>
+      </div>
+
+      <div class="comparison-wrapper">
+        <div class="comparison-grid">
+          <div class="comparison-column comparison-before">
+            <h3>
+              <span>❌</span>
+              Gestion manuelle
+            </h3>
+            <ul class="comparison-list">
+              <li>4-6 heures/jour sur WhatsApp</li>
+              <li>Captures d'écran MoMo falsifiables</li>
+              <li>Oublis de commandes fréquents</li>
+              <li>Tableaux Excel obsolètes</li>
+              <li>Pas de service après 18h</li>
+              <li>Erreurs de saisie répétées</li>
+              <li>Clients non satisfaits</li>
+            </ul>
+          </div>
+
+          <div class="comparison-column comparison-after">
+            <h3>
+              <span>✅</span>
+              Avec nos workflows n8n
+            </h3>
+            <ul class="comparison-list">
+              <li>15 min/jour de supervision</li>
+              <li>Vérification API instantanée</li>
+              <li>100% des commandes traitées</li>
+              <li>Données synchronisées en temps réel</li>
+              <li>Service client 24h/24</li>
+              <li>Zéro erreur de traitement</li>
+              <li>Satisfaction +89%</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Tarifs transparents</span>
+        <h2 class="section-title">Choisissez votre niveau d'automatisation</h2>
+        <p class="section-description">
+          Investissement unique + coûts mensuels prévisibles. ROI garanti en moins de 30 jours.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card fade-in">
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-price">
+            25.000 <span>FCFA</span>
+          </div>
+          <p class="pricing-description">
+            Parfait pour sécuriser vos paiements Mobile Money
+          </p>
+          <ul class="pricing-features">
+            <li>Vérification automatique MoMo & Orange</li>
+            <li>Notifications n8n instantanées</li>
+            <li>Dashboard Google Sheets</li>
+            <li>Documentation complète</li>
+            <li>Support 7 jours</li>
+          </ul>
+          <a href="https://wa.me/4915737746304?text=Pack%20Starter" 
+             class="btn btn-secondary" 
+             style="width: 100%; justify-content: center;"
+             target="_blank">
+            Choisir Starter
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            + ~5.000 FCFA/mois (hébergement)
+          </p>
+        </div>
+
+        <div class="pricing-card pricing-popular fade-in">
+          <div class="pricing-badge">⭐ Recommandé</div>
+          <div class="pricing-name">Business</div>
+          <div class="pricing-price">
+            65.000 <span>FCFA</span>
+          </div>
+          <p class="pricing-description">
+            Solution complète pour automatiser tout votre business
+          </p>
+          <ul class="pricing-features">
+            <li><strong>Tout le Pack Starter inclus</strong></li>
+            <li>Bot WhatsApp avec IA (Evolution API)</li>
+            <li>Gestion de stock automatisée</li>
+            <li>Base de données Airtable Pro</li>
+            <li>Workflows personnalisés n8n</li>
+            <li>Formation vidéo (2h)</li>
+            <li>Support prioritaire 30 jours</li>
+          </ul>
+          <a href="https://wa.me/4915737746304?text=Pack%20Business" 
+             class="btn btn-primary" 
+             style="width: 100%; justify-content: center;"
+             target="_blank">
+            Démarrer avec Business →
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            + ~15.000 FCFA/mois (stack complet)
+          </p>
+        </div>
+
+        <div class="pricing-card fade-in">
+          <div class="pricing-name">Enterprise</div>
+          <div class="pricing-price">
+            Sur devis
+          </div>
+          <p class="pricing-description">
+            Architecture sur mesure pour grandes organisations
+          </p>
+          <ul class="pricing-features">
+            <li><strong>Tout le Pack Business inclus</strong></li>
+            <li>Infrastructure dédiée on-premise</li>
+            <li>Intégrations ERP/CRM custom</li>
+            <li>Multi-utilisateurs & RBAC</li>
+            <li>SLA 99.9% uptime garanti</li>
+            <li>Formation équipe complète</li>
+            <li>Support 24/7 + hotline dédiée</li>
+          </ul>
+          <a href="https://wa.me/4915737746304?text=Enterprise%20Demo" 
+             class="btn btn-secondary" 
+             style="width: 100%; justify-content: center;"
+             target="_blank">
+            Demander une démo
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            Tarification personnalisée selon volume
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+          🛡️ Garantie satisfait ou remboursé 30 jours • 🔒 Paiement sécurisé • ✓ Sans engagement
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Témoignages</span>
+        <h2 class="section-title">Rejoignez 50+ entreprises satisfaites</h2>
+      </div>
+
+      <div class="testimonials-slider">
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            "Avant je passais 5h par jour sur WhatsApp. Maintenant le bot IA gère tout automatiquement. 
+            J'ai multiplié mes ventes par 3 en 2 mois sans embaucher personne !"
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JK</div>
+            <div class="testimonial-info">
+              <h4>Jean Kamdem</h4>
+              <p>E-commerce mode • Douala</p>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            "Fini les captures d'écran falsifiées ! La vérification MoMo automatique m'a fait économiser 
+            des millions de FCFA. ROI atteint en 3 semaines."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MN</div>
+            <div class="testimonial-info">
+              <h4>Marie Ngo</h4>
+              <p>Restaurant livraison • Yaoundé</p>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            "Formation claire, support ultra réactif, résultats immédiats. Le bot répond même la nuit 
+            pendant que je dors. Game changer absolu !"
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">PT</div>
+            <div class="testimonial-info">
+              <h4>Paul Tchoumi</h4>
+              <p>Formation en ligne • Bafoussam</p>
+              <div class="testimonial-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner fade-in">
+        <h2>Prêt à transformer votre business ?</h2>
+        <p>Rejoignez les entreprises camerounaises qui automatisent déjà leur croissance avec n8n</p>
+        <a href="https://wa.me/4915737746304?text=Audit%20gratuit" 
+           class="btn btn-large"
+           target="_blank" 
+           rel="noopener">
+          Réserver mon audit gratuit (30 min) →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon">n8</div>
+            <span>Expert n8n Cameroun</span>
+          </div>
+          <p>
+            Plateforme d'automatisation workflow et intelligence artificielle pour entreprises africaines. 
+            Expertise certifiée n8n & Evolution API.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-icon" aria-label="WhatsApp">📱</a>
+            <a href="#" class="social-icon" aria-label="LinkedIn">💼</a>
+            <a href="#" class="social-icon" aria-label="GitHub">💻</a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Solutions</h4>
+          <ul class="footer-links">
+            <li><a href="#solutions">Bots WhatsApp</a></li>
+            <li><a href="#solutions">Mobile Money</a></li>
+            <li><a href="#solutions">Workflows n8n</a></li>
+            <li><a href="#pricing">Tarifs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Ressources</h4>
+          <ul class="footer-links">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Cas d'usage</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li><a href="https://wa.me/4915737746304">WhatsApp</a></li>
+            <li><a href="mailto:contact@example.cm">Email</a></li>
+            <li>🇩🇪 Allemagne</li>
+            <li>🇨🇲 Cameroun</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Expert n8n Cameroun. Tous droits réservés.</p>
+        <p style="margin-top: 0.5rem;">
+          <a href="#privacy" style="color: var(--text-muted); margin: 0 1rem;">Confidentialité</a>
+          <a href="#terms" style="color: var(--text-muted); margin: 0 1rem;">Conditions</a>
+          <a href="#legal" style="color: var(--text-muted); margin: 0 1rem;">Mentions légales</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/4915737746304" 
+     class="whatsapp-float"
+     target="_blank" 
+     rel="noopener"
+     aria-label="Contact WhatsApp">
+    <svg width="32" height="32" fill="white" viewBox="0 0 16 16">
+      <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.96L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+    </svg>
   </a>
 
   <script>
-    // --- 1. LOGIQUE CANVAS 3D (Noeuds & Connexions style n8n) ---
+    // --- 1. LOGIQUE CANVAS 3D (Noeuds & Connexions) ---
     const canvas = document.getElementById('canvas3d');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -605,57 +1489,102 @@
     }
 
     class Particle {
-        constructor() { this.reset(); }
+        constructor() {
+            this.reset();
+        }
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.3;
-            this.vy = (Math.random() - 0.5) * 0.3;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.5 + 1;
         }
         update() {
-            this.x += this.vx; this.y += this.vy;
+            this.x += this.vx;
+            this.y += this.vy;
             if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
             if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-        draw() {
-            ctx.fillStyle = 'rgba(255, 107, 74, 0.4)';
-            ctx.beginPath();
-            ctx.roundRect(this.x, this.y, 4, 4, 1); // Noeuds carrés n8n
-            ctx.fill();
         }
     }
 
     function createParticles() {
         particles = [];
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        const count = Math.min(Math.floor(window.innerWidth / 15), 100);
+        for (let i = 0; i < count; i++) particles.push(new Particle());
     }
 
-    function animate() {
+    function animateCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach((p, i) => {
-            p.update(); p.draw();
+            p.update();
+            ctx.fillStyle = 'rgba(255, 107, 74, 0.3)'; // Orange n8n léger
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+
             for (let j = i + 1; j < particles.length; j++) {
-                const d = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
-                if (d < 150) {
-                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - d/150)})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath(); ctx.moveTo(p.x+2, p.y+2); ctx.lineTo(particles[j].x+2, particles[j].y+2); ctx.stroke();
+                const p2 = particles[j];
+                const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                if (dist < 150) {
+                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.15 * (1 - dist/150)})`; // Violet n8n
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
                 }
             }
         });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(animateCanvas);
     }
 
-    // --- 2. Animations au scroll ---
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    initCanvas(); createParticles(); animate();
     window.addEventListener('resize', () => { initCanvas(); createParticles(); });
+    initCanvas();
+    createParticles();
+    animateCanvas();
+
+    // --- 2. LOGIQUE ORIGINALE ---
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Track CTA clicks
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        console.log('CTA clicked:', btn.textContent.trim());
+      });
+    });
   </script>
+
 </body>
 </html>
 

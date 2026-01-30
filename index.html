@@ -2,263 +2,315 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Expert n8n & IA – Automatisation PME Cameroun | Bots WhatsApp & MoMo</title>
+  <title>Expert n8n Cameroun | Automatisation AI pour Entreprises</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta name="description" content="Expert n8n & IA - Automatisez WhatsApp, Mobile Money (MTN/Orange) et votre gestion. Bots intelligents pour PME camerounaises. Audit gratuit." />
-  <meta name="keywords" content="n8n Cameroun, automatisation WhatsApp, bot MoMo, Evolution API, automatisation PME" />
-  <meta name="theme-color" content="#6366f1" />
+  <meta name="description" content="Plateforme d'automatisation n8n pour PME camerounaises. WhatsApp Business, Mobile Money, workflows intelligents. Déployez l'IA dans votre business." />
+  <meta name="theme-color" content="#0F172A" />
   
-  <!-- Open Graph / Social Media -->
-  <meta property="og:title" content="Expert n8n & IA – Automatisation PME Cameroun" />
-  <meta property="og:description" content="Automatisez vos processus : WhatsApp, MoMo, stock. Solutions IA sur mesure pour entreprises camerounaises." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://votre-domaine.cm/preview.jpg" />
-  
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Expert n8n Cameroun",
-    "description": "Automatisation business et intelligence artificielle",
-    "areaServed": "CM",
-    "priceRange": "25000-65000 FCFA",
-    "telephone": "+4915737746304"
-  }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg: #020617;
-      --card-bg: rgba(15, 23, 42, 0.6);
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.3);
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --border: rgba(255, 255, 255, 0.1);
+      /* Palette inspirée n8n */
+      --bg-dark: #0A0D1A;
+      --bg-card: #0F172A;
+      --bg-elevated: #1E293B;
       
-      --spacing-xs: 0.5rem;
-      --spacing-sm: 1rem;
-      --spacing-md: 2rem;
-      --spacing-lg: 4rem;
-      --spacing-xl: 6rem;
+      /* Accents */
+      --primary: #FF6B4A; /* Orange n8n-style */
+      --primary-hover: #FF8566;
+      --secondary: #8B5CF6; /* Violet */
+      --accent-blue: #3B82F6;
       
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --shadow-md: 0 10px 20px var(--accent-glow);
-      --shadow-lg: 0 15px 30px var(--accent-glow);
+      /* Texte */
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      
+      /* Success/Warning */
+      --success: #10B981;
+      --warning: #F59E0B;
+      
+      /* Borders */
+      --border: rgba(148, 163, 184, 0.1);
+      --border-hover: rgba(148, 163, 184, 0.2);
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px rgba(255, 107, 74, 0.3);
+      
+      /* Spacing */
+      --section-padding: clamp(4rem, 10vw, 8rem);
+      --container-width: 1280px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html, body {
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    html {
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+
+      /* --- AJOUT EFFET GRILLE n8n --- */
+      background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 45px 45px;
     }
 
-    body::before {
+    /* Voile pour atténuer la grille sur les bords */
+    body::after {
       content: "";
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 80% 20%, #1e1b4b 0%, #020617 100%);
-      z-index: -1;
+      background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 85%);
+      z-index: -2;
+      pointer-events: none;
     }
 
-    /* Barre de promotion sticky */
-    .promo-bar {
-      background: linear-gradient(90deg, var(--accent), #8b5cf6);
+    #canvas3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Top Banner */
+    .top-banner {
+      background: linear-gradient(90deg, var(--secondary), var(--accent-blue));
       color: white;
       text-align: center;
-      padding: 0.8rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      animation: slideDown 0.5s ease;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      position: relative;
+      z-index: 100;
     }
-    
-    .promo-bar .close-promo {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
+
+    .top-banner a {
       color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      opacity: 0.8;
-      transition: 0.3s;
-    }
-    
-    .promo-bar .close-promo:hover { opacity: 1; }
-
-    @keyframes slideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
+      text-decoration: underline;
+      margin-left: 0.5rem;
     }
 
-    /* Header avec menu hamburger */
+    /* Header/Navigation */
     header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      backdrop-filter: blur(20px);
-      background: rgba(2, 6, 23, 0.95);
+      z-index: 90;
+      background: rgba(10, 13, 26, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 1.5rem;
+    nav {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      max-width: var(--container-width);
+      margin: 0 auto;
     }
 
-    .logo-group { display: flex; align-items: center; gap: 10px; }
-    .logo-dot { 
-      width: 12px; height: 12px; 
-      background: var(--success); 
-      border-radius: 50%; 
-      box-shadow: 0 0 10px var(--success);
-      animation: pulse-dot 2s infinite;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
     }
-    
-    @keyframes pulse-dot {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-    
-    .brand { 
-      font-weight: 800; 
-      font-size: 0.9rem; 
-      letter-spacing: 1px; 
-      text-transform: uppercase; 
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
       align-items: center;
     }
-    
+
     .nav-links a {
-      color: var(--text);
+      color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 500;
+      font-size: 0.95rem;
       transition: color 0.3s;
-    }
-    
-    .nav-links a:hover { color: var(--accent); }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.5rem;
-    }
-    
-    .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: var(--text);
-      border-radius: 3px;
-      transition: 0.3s;
-    }
-    
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 60px;
-        right: -100%;
-        width: 70%;
-        height: calc(100vh - 60px);
-        background: rgba(2, 6, 23, 0.98);
-        flex-direction: column;
-        padding: 2rem;
-        transition: right 0.3s;
-        border-left: 1px solid var(--border);
-      }
-      
-      .nav-links.active { right: 0; }
-      .hamburger { display: flex; }
+      position: relative;
     }
 
-    main { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
 
-    /* Hero Section */
-    #hero {
-      padding: 6rem 0;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 3rem;
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 1rem;
       align-items: center;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid var(--accent);
-      border-radius: 20px;
-      color: var(--accent);
-      font-size: 0.7rem;
-      font-weight: bold;
-      margin-bottom: 1.5rem;
+    /* Buttons */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Effet brillance bouton n8n */
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      opacity: 0; transition: 0.3s;
+    }
+
+    .btn-primary:hover::after { opacity: 1; }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-large {
+      padding: 1rem 2rem;
+      font-size: 1.05rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: var(--section-padding) 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 50px;
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
       animation: fadeInUp 0.8s ease;
     }
 
-    h1 { 
-      font-size: clamp(2.2rem, 8vw, 3.8rem); 
-      line-height: 1.1; 
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
       font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
       animation: fadeInUp 1s ease;
     }
-    
-    h1 span { 
-      background: linear-gradient(90deg, #818cf8, #34d399); 
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent; 
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .hero-sub { 
-      color: #cbd5e1;
-      font-size: 1.15rem; 
-      margin: 2rem 0; 
-      max-width: 550px;
-      line-height: 1.6;
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
       animation: fadeInUp 1.2s ease;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1.4s ease;
     }
 
     @keyframes fadeInUp {
@@ -266,2034 +318,344 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 12px;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: var(--shadow-md);
-      font-size: 1rem;
+    /* Section Title */
+    .section {
+      padding: var(--section-padding) 0;
     }
 
-    .btn-primary:hover { 
-      transform: translateY(-3px); 
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .btn-secondary {
-      background: transparent;
-      color: var(--accent);
-      padding: 1rem 2rem;
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    
-    .btn-secondary:hover {
-      background: var(--accent);
-      color: white;
-    }
-
-    .hero-image {
-      animation: fadeInRight 1s ease;
-    }
-    
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .code-block {
-      border: 2px solid var(--accent); 
-      padding: 2rem; 
-      border-radius: 30px; 
-      background: var(--accent-glow); 
+    .section-header {
       text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .code-block::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-      animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+      max-width: 800px;
+      margin: 0 auto 4rem;
     }
 
-    /* Grilles et Cartes */
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-      gap: 2rem; 
-      margin-top: 3rem; 
+    .section-tag {
+      display: inline-block;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
     }
-    
-    .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 2.5rem;
-      border-radius: 24px;
-      backdrop-filter: blur(10px);
-      transition: all 0.4s;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (hover: hover) {
-      .card:hover { 
-        border-color: var(--accent); 
-        transform: translateY(-5px); 
-        background: rgba(30, 41, 59, 0.8); 
-      }
-    }
-
-    .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
-    .card p { color: var(--muted); line-height: 1.7; }
 
     .section-title {
-      text-align: center; 
-      font-size: clamp(2rem, 6vw, 3rem); 
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.2;
       margin-bottom: 1rem;
-      font-weight: 900;
-    }
-    
-    .section-subtitle {
-      text-align: center; 
-      color: var(--muted); 
-      margin-bottom: 4rem;
-      font-size: 1.1rem;
+      letter-spacing: -0.02em;
     }
 
-    section { 
-      padding: var(--spacing-xl) 0; 
-      scroll-margin-top: 80px;
-    }
-
-    /* Stats Counter */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-    
-    .stat-card {
-      text-align: center;
-      padding: 2rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      transition: 0.3s;
-    }
-    
-    .stat-card:hover {
-      border-color: var(--accent);
-      transform: scale(1.05);
-    }
-    
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 900;
-      color: var(--accent);
-      display: block;
-    }
-    
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-
-    /* Comparaison Avant/Après */
-    .comparison {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    
-    .before, .after {
-      padding: 2rem;
-      border-radius: 20px;
-      border: 2px solid;
-    }
-    
-    .before {
-      background: rgba(239, 68, 68, 0.05);
-      border-color: #ef4444;
-    }
-    
-    .after {
-      background: rgba(34, 197, 94, 0.05);
-      border-color: var(--success);
-    }
-    
-    .comparison h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1.5rem;
-      font-size: 1.3rem;
-    }
-    
-    .comparison ul {
-      list-style: none;
-    }
-    
-    .comparison li {
-      padding: 0.8rem 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    
-    .comparison li:last-child { border: none; }
-
-    /* Process Steps */
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 3rem;
-      margin-top: 3rem;
-      position: relative;
-    }
-    
-    .step {
-      text-align: center;
-      position: relative;
-    }
-    
-    .step-number {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      color: white;
-      font-size: 2rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      box-shadow: 0 10px 30px var(--accent-glow);
-    }
-    
-    .step h3 { margin-bottom: 1rem; }
-    .step p { color: var(--muted); line-height: 1.6; }
-
-    /* Pricing */
-    .price { 
-      font-size: 2.8rem; 
-      font-weight: 900; 
-      margin: 1.5rem 0;
-      color: var(--accent);
-    }
-    
-    .price span { 
-      font-size: 1rem; 
-      color: var(--muted); 
-      font-weight: 400;
-    }
-
-    .popular { 
-      border: 2px solid var(--accent); 
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.2);
-      transform: scale(1.05);
-    }
-    
-    .popular::before {
-      content: "⭐ CONSEILLÉ";
-      position: absolute; 
-      top: 15px; 
-      right: -35px;
-      background: var(--accent); 
-      color: white;
-      padding: 5px 45px; 
-      transform: rotate(45deg); 
-      font-size: 0.65rem; 
-      font-weight: 900;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    ul { list-style: none; margin-bottom: 2rem; }
-    ul li { 
-      margin-bottom: 12px; 
-      color: var(--muted); 
-      display: flex; 
-      align-items: flex-start; 
-      gap: 10px;
-      line-height: 1.6;
-    }
-    ul li::before { 
-      content: "✓"; 
-      color: var(--success); 
-      font-weight: bold; 
-      font-size: 1.2rem;
-    }
-
-    /* Témoignages */
-    .testimonials {
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .testimonials-slider {
-      display: flex;
-      gap: 2rem;
-      transition: transform 0.5s ease;
-    }
-    
-    .testimonial {
-      min-width: 350px;
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      position: relative;
-    }
-    
-    .testimonial::before {
-      content: '"';
-      font-size: 4rem;
-      color: var(--accent);
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      opacity: 0.3;
-    }
-    
-    .testimonial-text {
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-    
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 1.2rem;
-    }
-    
-    .author-info h4 {
-      margin-bottom: 0.3rem;
-      font-size: 1rem;
-    }
-    
-    .author-info p {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    
-    .stars {
-      color: #fbbf24;
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-    }
-
-    /* FAQ Accordion */
-    .faq-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-      transition: 0.3s;
-    }
-    
-    .faq-item:hover {
-      border-color: var(--accent);
-    }
-    
-    .faq-question {
-      padding: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      font-size: 1.05rem;
-      user-select: none;
-    }
-    
-    .faq-question::after {
-      content: '+';
-      font-size: 1.5rem;
-      color: var(--accent);
-      transition: transform 0.3s;
-    }
-    
-    .faq-item.active .faq-question::after {
-      transform: rotate(45deg);
-    }
-    
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      color: var(--muted);
+    .section-description {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
       line-height: 1.7;
     }
-    
-    .faq-answer-content {
-      padding: 0 1.5rem 1.5rem;
-    }
-    
-    .faq-item.active .faq-answer {
-      max-height: 500px;
-    }
 
-    /* ROI Calculator */
-    .calculator {
-      background: var(--card-bg);
-      padding: 3rem;
-      border-radius: 25px;
-      border: 1px solid var(--border);
-      max-width: 700px;
-      margin: 3rem auto;
-    }
-    
-    .calc-input {
-      margin-bottom: 2rem;
-    }
-    
-    .calc-input label {
-      display: block;
-      margin-bottom: 0.8rem;
-      font-weight: 600;
-    }
-    
-    .calc-input input[type="range"] {
-      width: 100%;
-      height: 8px;
-      border-radius: 5px;
-      background: var(--border);
-      outline: none;
-      -webkit-appearance: none;
-    }
-    
-    .calc-input input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
-    
-    .calc-input input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      box-shadow: 0 0 10px var(--accent-glow);
-      border: none;
-    }
-    
-    .calc-display {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.5rem;
-    }
-    
-    .calc-value {
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    
-    .calc-result {
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      padding: 2rem;
-      border-radius: 20px;
-      text-align: center;
-      margin-top: 2rem;
-    }
-    
-    .calc-result h3 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .calc-result p {
-      opacity: 0.9;
-      font-size: 1rem;
-    }
-
-    /* Technologies */
-    .tech-grid {
+    /* Feature Grid & Glow */
+    .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
-      margin-top: 3rem;
     }
-    
-    .tech-item {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: var(--card-bg);
+
+    .feature-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      transition: 0.3s;
-      cursor: pointer;
+      border-radius: 16px;
+      padding: 2.5rem;
+      transition: all 0.3s;
+      position: relative;
     }
-    
-    .tech-item:hover {
-      border-color: var(--accent);
+
+    .feature-card:hover {
+      border-color: var(--primary);
       transform: translateY(-5px);
-    }
-    
-    .tech-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-    
-    .tech-item h4 {
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .tech-item p {
-      font-size: 0.8rem;
-      color: var(--muted);
+      box-shadow: 0 0 40px rgba(255, 107, 74, 0.1);
+      background: rgba(15, 23, 42, 0.8);
     }
 
-    /* Use Cases */
-    .usecases-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    
-    .usecase {
-      padding: 1.5rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      transition: 0.3s;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    
-    .usecase:hover {
-      border-color: var(--accent);
-      transform: translateX(5px);
-    }
-    
-    .usecase-icon {
-      font-size: 2rem;
-      flex-shrink: 0;
-    }
-    
-    .usecase h4 {
-      margin-bottom: 0.5rem;
-      font-size: 1.05rem;
-    }
-    
-    .usecase p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    /* Trust Badges */
-    .trust-badges {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      margin: 3rem 0;
-    }
-    
-    .badge-item {
-      text-align: center;
-    }
-    
-    .badge-icon {
+    .feature-icon {
       width: 60px;
       height: 60px;
-      margin: 0 auto 1rem;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      border-radius: 50%;
+      background: rgba(255, 107, 74, 0.1);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.8rem;
-    }
-    
-    .badge-item h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-    }
-    
-    .badge-item p {
-      font-size: 0.8rem;
-      color: var(--muted);
+      margin-bottom: 1.5rem;
     }
 
-    /* Blog Section */
-    .blog-grid {
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 2rem;
       margin-top: 3rem;
     }
-    
-    .blog-card {
-      background: var(--card-bg);
+
+    .pricing-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
       border-radius: 20px;
-      overflow: hidden;
-      transition: 0.3s;
-      cursor: pointer;
+      padding: 3rem;
+      position: relative;
+      transition: all 0.3s;
     }
-    
-    .blog-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
+
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
     }
-    
-    .blog-image {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    .pricing-popular {
+      border: 2px solid var(--primary);
+      transform: scale(1.05);
+    }
+
+    .pricing-price {
       font-size: 3rem;
-    }
-    
-    .blog-content {
-      padding: 2rem;
-    }
-    
-    .blog-date {
-      color: var(--accent);
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-    }
-    
-    .blog-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-    
-    .blog-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    /* Contact Form */
-    .contact-form {
-      max-width: 600px;
-      margin: 3rem auto;
-      background: var(--card-bg);
-      padding: 3rem;
-      border-radius: 25px;
-      border: 1px solid var(--border);
-    }
-    
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    
-    .form-group label {
-      display: block;
+      font-weight: 900;
       margin-bottom: 0.5rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-    
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    
-    .form-group textarea {
-      min-height: 120px;
-      resize: vertical;
     }
 
-    /* CTA Section */
-    .cta-section {
-      text-align: center; 
-      padding: 4rem 2rem; 
-      background: var(--card-bg); 
-      border-radius: 30px; 
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cta-section::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.05), transparent);
-      animation: shine 4s infinite;
-    }
-    
-    .cta-section h2 {
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .cta-section p {
+    .pricing-features {
+      list-style: none;
       margin-bottom: 2rem;
-      color: var(--muted);
-      position: relative;
-      z-index: 1;
-    }
-    
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
     }
 
-    /* Exit Intent Popup */
-    .exit-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
+    .pricing-features li {
+      padding: 0.75rem 0;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      animation: fadeIn 0.3s;
-    }
-    
-    .exit-popup.active { display: flex; }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .popup-content {
-      background: var(--bg);
-      border: 2px solid var(--accent);
-      border-radius: 30px;
-      padding: 3rem;
-      max-width: 500px;
-      text-align: center;
-      position: relative;
-      animation: scaleIn 0.3s;
-    }
-    
-    @keyframes scaleIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    
-    .popup-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    
-    .popup-close:hover {
-      color: var(--text);
-      transform: rotate(90deg);
-    }
-    
-    .popup-content h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    
-    .popup-content p {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      line-height: 1.6;
+      gap: 0.75rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
     }
 
-    /* Social Notification */
-    .social-notification {
-      position: fixed;
-      bottom: 100px;
-      left: 20px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transform: translateX(-400px);
-      transition: transform 0.5s;
-      z-index: 90;
-      max-width: 300px;
-    }
-    
-    .social-notification.show {
-      transform: translateX(0);
-    }
-    
-    .notification-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #8b5cf6);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--success);
       font-weight: 900;
     }
-    
-    .notification-text {
-      font-size: 0.85rem;
-      line-height: 1.4;
-    }
-    
-    .notification-text strong {
-      color: var(--accent);
-    }
 
-    /* Cookie Consent */
-    .cookie-consent {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(2, 6, 23, 0.98);
-      border-top: 1px solid var(--border);
-      padding: 1.5rem;
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      z-index: 200;
-      animation: slideUp 0.5s;
-    }
-    
-    .cookie-consent.show { display: flex; }
-    
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-    
-    .cookie-text {
-      flex: 1;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    
-    .cookie-text a {
-      color: var(--accent);
-      text-decoration: underline;
-    }
-    
-    .cookie-buttons {
-      display: flex;
-      gap: 1rem;
-    }
-    
-    .cookie-buttons button {
-      padding: 0.7rem 1.5rem;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    
-    .btn-accept {
-      background: var(--accent);
-      color: white;
-    }
-    
-    .btn-decline {
-      background: transparent;
-      color: var(--muted);
+    /* Testimonials */
+    .testimonial-card {
+      background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
     }
 
     /* WhatsApp Float */
-    .wa-float {
-      position: fixed; 
-      bottom: 30px; 
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
       right: 30px;
-      background: #25d366; 
-      width: 60px; 
+      width: 60px;
       height: 60px;
-      border-radius: 50%; 
-      display: flex; 
-      align-items: center; 
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); 
-      z-index: 1000;
-      transition: 0.3s;
-      animation: pulse-wa 2s infinite;
-    }
-    
-    .wa-float:hover { 
-      transform: scale(1.1); 
-      box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
-    }
-    
-    @keyframes pulse-wa {
-      0%, 100% { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
-      50% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.7); }
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      z-index: 200;
+      transition: all 0.3s;
     }
 
-    /* Footer */
-    footer {
-      padding: 4rem 1.5rem; 
-      text-align: center; 
-      color: var(--muted); 
-      font-size: 0.85rem; 
-      border-top: 1px solid var(--border); 
-      margin-top: 4rem;
-    }
-    
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    
-    footer a:hover {
-      text-decoration: underline;
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.8s ease-out;
     }
 
-    /* Responsive */
-    @media (max-width: 860px) {
-      #hero { 
-        grid-template-columns: 1fr; 
-        text-align: center; 
-        padding: 4rem 0; 
-      }
-      
-      .hero-sub { 
-        margin: 2rem auto; 
-      }
-      
-      .hero-image { 
-        display: none; 
-      }
-      
-      .comparison {
-        grid-template-columns: 1fr;
-      }
-      
-      .popular {
-        transform: scale(1);
-      }
-      
-      .cookie-consent {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .social-notification {
-        left: 10px;
-        right: 10px;
-        max-width: calc(100% - 20px);
-      }
-      
-      .nav-links a {
-        font-size: 1.1rem;
-      }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     
-    @media (max-width: 500px) {
-      .promo-bar {
-        font-size: 0.75rem;
-        padding: 0.6rem;
-      }
-      
-      .grid, .grid-2 {
-        grid-template-columns: 1fr;
-      }
-      
-      .calculator,
-      .contact-form {
-        padding: 2rem 1.5rem;
-      }
-      
-      .popup-content {
-        margin: 1rem;
-        padding: 2rem 1.5rem;
-      }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .pricing-popular { transform: scale(1); }
     }
   </style>
 </head>
 <body>
 
-<!-- Barre de promotion -->
-<div class="promo-bar" id="promoBar">
-  🎉 OFFRE LIMITÉE : Audit gratuit + 1 mois de support offert jusqu'au 15 février 2026
-  <button class="close-promo" onclick="closePromo()" aria-label="Fermer la promotion">×</button>
-</div>
+  <canvas id="canvas3d"></canvas>
 
-<!-- Header avec navigation -->
-<header role="banner">
-  <nav class="nav" role="navigation" aria-label="Navigation principale">
-    <div class="logo-group">
-      <div class="logo-dot"></div>
-      <span class="brand">Expert n8n • Cameroun</span>
-    </div>
-    
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#process">Processus</a></li>
-      <li><a href="#tarifs">Tarifs</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    
-    <button class="hamburger" id="hamburger" aria-label="Menu de navigation" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
-</header>
-
-<main role="main">
-  <!-- Hero Section -->
-  <section id="hero">
-    <div class="hero-content">
-      <div class="badge">✓ PROFIL VÉRIFIÉ • BASÉ EN ALLEMAGNE</div>
-      <h1>L'Intelligence Artificielle au service de <span>vos profits</span>.</h1>
-      <p class="hero-sub">
-        J'automatise vos processus business de A à Z : de la réception d'un message WhatsApp à la validation du paiement MoMo, sans aucune intervention humaine. Libérez votre temps, multipliez vos résultats.
-      </p>
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-primary" onclick="scrollToSection('tarifs')" aria-label="Découvrir nos forfaits">
-          Découvrir nos Packs
-        </button>
-        <button class="btn-secondary" onclick="scrollToSection('calculator')">
-          Calculer mon ROI
-        </button>
-      </div>
-    </div>
-    
-    <div class="hero-image">
-      <div class="code-block">
-        <code style="color: #fff; font-size: 0.9rem; display: block; text-align: left;">
-          <span style="color: #818cf8;">IF</span> (Payment == <span style="color: #34d399;">"MoMo"</span>) {<br>
-          &nbsp;&nbsp;Send_WhatsApp_Receipt();<br>
-          &nbsp;&nbsp;Update_Airtable_Stock();<br>
-          &nbsp;&nbsp;Notify_Admin();<br>
-          }
-        </code>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-number" data-target="2500">0</span>+
-        <span class="stat-label">Messages traités automatiquement</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-target="89">0</span>%
-        <span class="stat-label">Taux de satisfaction client</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-target="15">0</span>min
-        <span class="stat-label">Temps de réponse moyen</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-number" data-target="50">0</span>+
-        <span class="stat-label">PME camerounaises accompagnées</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Comparaison Avant/Après -->
-  <section>
-    <h2 class="section-title">Avant vs Après l'Automatisation</h2>
-    <p class="section-subtitle">Voyez la transformation concrète de votre business</p>
-    
-    <div class="comparison">
-      <div class="before">
-        <h3><span style="font-size: 1.5rem;">❌</span> AVANT : Chaos manuel</h3>
-        <ul>
-          <li>⏰ 4 heures/jour sur WhatsApp</li>
-          <li>📸 Captures d'écran MoMo falsifiées</li>
-          <li>😰 Oublis de commandes fréquents</li>
-          <li>📊 Gestion Excel chaotique</li>
-          <li>💸 Pertes de revenus invisibles</li>
-          <li>😴 Pas de suivi après 18h</li>
-        </ul>
-      </div>
-      
-      <div class="after">
-        <h3><span style="font-size: 1.5rem;">✅</span> APRÈS : Automatisation totale</h3>
-        <ul>
-          <li>⚡ 15 min/jour de supervision</li>
-          <li>🔒 Vérification API instantanée</li>
-          <li>✓ 100% des commandes traitées</li>
-          <li>📈 Tableaux de bord en temps réel</li>
-          <li>💰 Chaque paiement comptabilisé</li>
-          <li>🌙 Service 24h/24, même la nuit</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services">
-    <h2 class="section-title">Solutions sur mesure</h2>
-    <p class="section-subtitle">Technologies de pointe adaptées au contexte camerounais</p>
-    
-    <div class="grid">
-      <div class="card">
-        <h3>🤖 Bots WhatsApp Intelligents</h3>
-        <p>Un assistant IA qui vend, qualifie et répond à vos clients 24h/24 sur votre numéro officiel WhatsApp Business. Personnalisé selon votre catalogue produits.</p>
-      </div>
-      
-      <div class="card">
-        <h3>💸 Automatisation MoMo</h3>
-        <p>Liez MTN Mobile Money & Orange Money à votre gestion. Vérification instantanée des paiements par API. Fini les captures d'écran falsifiées et les vérifications manuelles.</p>
-      </div>
-      
-      <div class="card">
-        <h3>📊 Tableaux de bord dynamiques</h3>
-        <p>Suivez vos ventes, stock et performances en temps réel sur Google Sheets ou Airtable. Mise à jour automatique à chaque transaction, accessible partout.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process Steps -->
-  <section id="process">
-    <h2 class="section-title">Comment ça marche ?</h2>
-    <p class="section-subtitle">De l'audit à la mise en ligne en 3 étapes simples</p>
-    
-    <div class="process-steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <h3>Audit Gratuit (30 min)</h3>
-        <p>Appel WhatsApp pour comprendre vos besoins, identifier les processus chronophages et définir les priorités d'automatisation.</p>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">2</div>
-        <h3>Configuration (48h)</h3>
-        <p>Mise en place technique de vos automatisations : connexion API, workflows n8n, intégrations WhatsApp et MoMo personnalisées.</p>
-      </div>
-      
-      <div class="step">
-        <div class="step-number">3</div>
-        <h3>Formation & Go Live</h3>
-        <p>Formation vidéo complète, documentation et support pendant 1 semaine pour assurer une transition en douceur. Vous êtes opérationnel !</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Use Cases -->
-  <section>
-    <h2 class="section-title">Cas d'usage par secteur</h2>
-    <p class="section-subtitle">Solutions adaptées à votre domaine d'activité</p>
-    
-    <div class="usecases-grid">
-      <div class="usecase">
-        <div class="usecase-icon">🛒</div>
-        <div>
-          <h4>E-commerce</h4>
-          <p>Commandes automatisées, gestion de stock, notifications clients, suivi livraison</p>
-        </div>
-      </div>
-      
-      <div class="usecase">
-        <div class="usecase-icon">🏠</div>
-        <div>
-          <h4>Immobilier</h4>
-          <p>Qualification de leads, visites automatisées, suivi prospects, CRM intégré</p>
-        </div>
-      </div>
-      
-      <div class="usecase">
-        <div class="usecase-icon">🎓</div>
-        <div>
-          <h4>Formation</h4>
-          <p>Inscriptions, paiements, accès cours, certificats, rappels automatiques</p>
-        </div>
-      </div>
-      
-      <div class="usecase">
-        <div class="usecase-icon">🍕</div>
-        <div>
-          <h4>Restaurant / Livraison</h4>
-          <p>Réservations, commandes WhatsApp, gestion cuisine, suivi livreurs</p>
-        </div>
-      </div>
-      
-      <div class="usecase">
-        <div class="usecase-icon">💼</div>
-        <div>
-          <h4>Services B2B</h4>
-          <p>Devis automatiques, facturation, relances, reporting clients</p>
-        </div>
-      </div>
-      
-      <div class="usecase">
-        <div class="usecase-icon">🏥</div>
-        <div>
-          <h4>Santé / Cliniques</h4>
-          <p>Prise de RDV, rappels consultations, gestion dossiers patients</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROI Calculator -->
-  <section id="calculator">
-    <h2 class="section-title">Calculateur de ROI</h2>
-    <p class="section-subtitle">Estimez votre économie de temps et d'argent</p>
-    
-    <div class="calculator">
-      <div class="calc-input">
-        <label for="whatsappTime">Heures/semaine sur WhatsApp :</label>
-        <input type="range" id="whatsappTime" min="0" max="40" value="10" oninput="calculateROI()">
-        <div class="calc-display">
-          <span>Temps actuel :</span>
-          <span class="calc-value" id="whatsappValue">10h/semaine</span>
-        </div>
-      </div>
-      
-      <div class="calc-input">
-        <label for="paymentTime">Heures/semaine à vérifier les paiements :</label>
-        <input type="range" id="paymentTime" min="0" max="20" value="5" oninput="calculateROI()">
-        <div class="calc-display">
-          <span>Temps actuel :</span>
-          <span class="calc-value" id="paymentValue">5h/semaine</span>
-        </div>
-      </div>
-      
-      <div class="calc-input">
-        <label for="adminTime">Heures/semaine de gestion administrative :</label>
-        <input type="range" id="adminTime" min="0" max="30" value="8" oninput="calculateROI()">
-        <div class="calc-display">
-          <span>Temps actuel :</span>
-          <span class="calc-value" id="adminValue">8h/semaine</span>
-        </div>
-      </div>
-      
-      <div class="calc-result">
-        <h3 id="timesSaved">92h/mois</h3>
-        <p>Temps économisé avec l'automatisation</p>
-        <p style="margin-top: 1rem; font-size: 1.1rem;">💰 Soit l'équivalent de <strong id="moneySaved">276.000 FCFA</strong> si vous valorisez votre temps à 3.000 FCFA/h</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="tarifs">
-    <h2 class="section-title">Investissement</h2>
-    <p class="section-subtitle">Libérez votre temps pour seulement quelques FCFA par jour</p>
-    
-    <div class="grid grid-2">
-      <div class="card">
-        <span style="color: var(--success); font-weight: bold; font-size: 0.9rem;">🚀 PACK START</span>
-        <div class="price">25.000 <span>FCFA</span></div>
-        <p style="margin-bottom: 1.5rem; color: var(--muted);">Idéal pour sécuriser vos paiements mobiles</p>
-        <ul>
-          <li>🔒 Sécurisation MoMo/Orange Money</li>
-          <li>📬 Notifications n8n instantanées</li>
-          <li>📊 Suivi Google Sheets automatisé</li>
-          <li>📚 Documentation complète</li>
-          <li>💬 Support 7 jours</li>
-        </ul>
-        <button class="btn-primary" style="width: 100%; background: transparent; border: 2px solid var(--accent);" 
-                onclick="window.open('https://wa.me/4915737746304?text=Je%20veux%20le%20Pack%20Start', '_blank')"
-                aria-label="Commander le Pack Start">
-          Choisir Start
-        </button>
-      </div>
-
-      <div class="card popular">
-        <span style="color: var(--accent); font-weight: bold; font-size: 0.9rem;">⚡ PACK BUSINESS</span>
-        <div class="price">65.000 <span>FCFA</span></div>
-        <p style="margin-bottom: 1.5rem; color: var(--muted);">La solution complète pour automatiser tout votre business</p>
-        <ul>
-          <li><strong style="color: var(--text);">✓ Tout le Pack Start inclus</strong></li>
-          <li>🤖 Bot WhatsApp intelligent (Evolution API)</li>
-          <li>📦 Gestion de stock automatisée</li>
-          <li>📈 Tableaux de bord avancés (Airtable)</li>
-          <li>🎯 Workflows personnalisés n8n</li>
-          <li>🎓 Formation vidéo complète</li>
-          <li>🛟 Accompagnement stratégique 30 jours</li>
-        </ul>
-        <button class="btn-primary" style="width: 100%;" 
-                onclick="window.open('https://wa.me/4915737746304?text=Je%20veux%20le%20Pack%20Business', '_blank')"
-                aria-label="Commander le Pack Business">
-          Prendre le contrôle 🚀
-        </button>
-      </div>
-    </div>
-    
-    <div style="text-align: center; margin-top: 3rem;">
-      <p style="color: var(--muted); margin-bottom: 1rem;">💡 Besoin d'une solution sur mesure ?</p>
-      <button class="btn-secondary" onclick="window.open('https://wa.me/4915737746304?text=Je%20veux%20un%20devis%20personnalisé', '_blank')">
-        Demander un devis personnalisé
-      </button>
-    </div>
-  </section>
-
-  <!-- Trust Badges -->
-  <section>
-    <div class="trust-badges">
-      <div class="badge-item">
-        <div class="badge-icon">🛡️</div>
-        <h4>Paiement sécurisé</h4>
-        <p>100% protégé</p>
-      </div>
-      
-      <div class="badge-item">
-        <div class="badge-icon">✓</div>
-        <h4>Certifié Expert</h4>
-        <p>n8n & Evolution API</p>
-      </div>
-      
-      <div class="badge-item">
-        <div class="badge-icon">🔄</div>
-        <h4>Garantie 30 jours</h4>
-        <p>Satisfait ou remboursé</p>
-      </div>
-      
-      <div class="badge-item">
-        <div class="badge-icon">💬</div>
-        <h4>Support 7j/7</h4>
-        <p>Réponse rapide</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials">
-    <h2 class="section-title">Ce que disent nos clients</h2>
-    <p class="section-subtitle">+50 entreprises camerounaises nous font confiance</p>
-    
-    <div class="testimonials-slider">
-      <div class="testimonial">
-        <p class="testimonial-text">
-          "Avant j'passais 5h par jour sur WhatsApp. Maintenant le bot gère tout automatiquement. J'ai multiplié mes ventes par 3 en 2 mois !"
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">JK</div>
-          <div class="author-info">
-            <h4>Jean Kamdem</h4>
-            <p>E-commerce mode • Douala</p>
-            <div class="stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-        <p class="testimonial-text">
-          "Fini les captures d'écran falsifiées ! Avec la vérification MoMo automatique, j'ai arrêté de perdre de l'argent. Solution parfaite."
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">MN</div>
-          <div class="author-info">
-            <h4>Marie Ngo</h4>
-            <p>Restaurant livraison • Yaoundé</p>
-            <div class="stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-        <p class="testimonial-text">
-          "Excellent accompagnement ! Le bot WhatsApp répond à mes clients même la nuit. Les formations sont claires et le support ultra réactif."
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">PT</div>
-          <div class="author-info">
-            <h4>Paul Tchoumi</h4>
-            <p>Formation en ligne • Bafoussam</p>
-            <div class="stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-        <p class="testimonial-text">
-          "ROI incroyable ! En 3 semaines mon investissement était amorti. Je recommande à tous les entrepreneurs qui veulent scaler."
-        </p>
-        <div class="testimonial-author">
-          <div class="author-avatar">ED</div>
-          <div class="author-info">
-            <h4>Éric Diffo</h4>
-            <p>Import-export • Limbé</p>
-            <div class="stars">★★★★★</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Technologies -->
-  <section>
-    <h2 class="section-title">Technologies utilisées</h2>
-    <p class="section-subtitle">Stack technique moderne et fiable</p>
-    
-    <div class="tech-grid">
-      <div class="tech-item">
-        <div class="tech-icon">⚙️</div>
-        <h4>n8n</h4>
-        <p>Automatisation workflows</p>
-      </div>
-      
-      <div class="tech-item">
-        <div class="tech-icon">💬</div>
-        <h4>Evolution API</h4>
-        <p>WhatsApp Business</p>
-      </div>
-      
-      <div class="tech-item">
-        <div class="tech-icon">💸</div>
-        <h4>MTN/Orange API</h4>
-        <p>Mobile Money</p>
-      </div>
-      
-      <div class="tech-item">
-        <div class="tech-icon">📊</div>
-        <h4>Airtable</h4>
-        <p>Base de données</p>
-      </div>
-      
-      <div class="tech-item">
-        <div class="tech-icon">📈</div>
-        <h4>Google Sheets</h4>
-        <p>Reporting temps réel</p>
-      </div>
-      
-      <div class="tech-item">
-        <div class="tech-icon">🤖</div>
-        <h4>OpenAI</h4>
-        <p>Intelligence artificielle</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <h2 class="section-title">Questions fréquentes</h2>
-    <p class="section-subtitle">Tout ce que vous devez savoir avant de démarrer</p>
-    
-    <div style="max-width: 800px; margin: 3rem auto;">
-      <div class="faq-item">
-        <div class="faq-question">Combien de temps pour la mise en place ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Pack Start : 48h maximum. Pack Business : 5 à 7 jours selon la complexité. Vous recevez des mises à jour quotidiennes sur l'avancement et êtes impliqué à chaque étape de validation.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Est-ce compatible avec mon secteur d'activité ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Oui ! Nous travaillons avec e-commerce, restaurants, formations, immobilier, services B2B, santé... L'automatisation s'adapte à 95% des business. Lors de l'audit gratuit, nous validons ensemble la faisabilité technique.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Que se passe-t-il après le paiement ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            1) Confirmation immédiate par WhatsApp • 2) Planification de l'audit (30 min) • 3) Début de la configuration sous 24h • 4) Livraison + formation • 5) Support continu pendant la période d'accompagnement.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">La formation est-elle incluse ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Absolument ! Pack Start : documentation écrite + vidéo de prise en main. Pack Business : formation vidéo complète (2-3h), documentation détaillée, appels de suivi et support WhatsApp illimité pendant 30 jours.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Dois-je avoir des compétences techniques ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Non, aucune compétence technique requise ! Tout est clé en main. Vous devez juste savoir utiliser WhatsApp et Google Sheets. Je m'occupe de toute la partie technique complexe (API, webhooks, workflows...).
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Garantie satisfait ou remboursé ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Oui, garantie 30 jours ! Si l'automatisation ne fonctionne pas comme promis ou ne correspond pas à vos attentes, remboursement intégral sans question. Votre satisfaction est ma priorité.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Quels sont les coûts mensuels après ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Pack Start : ~5.000 FCFA/mois (hébergement n8n). Pack Business : ~15.000 FCFA/mois (n8n + Evolution API + Airtable). Coûts transparents, pas de frais cachés. Vous gardez le contrôle de vos outils.
-          </div>
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">Puis-je modifier les automatisations moi-même ?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-content">
-            Oui ! Après la formation, vous avez accès complet à votre instance n8n. Vous pouvez modifier les workflows comme vous voulez. Et si besoin, je reste disponible pour du support additionnel (tarifs préférentiels).
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Blog / Resources -->
-  <section id="blog">
-    <h2 class="section-title">Ressources gratuites</h2>
-    <p class="section-subtitle">Guides et articles pour automatiser intelligemment</p>
-    
-    <div class="blog-grid">
-      <div class="blog-card">
-        <div class="blog-image">📝</div>
-        <div class="blog-content">
-          <div class="blog-date">15 JAN 2026</div>
-          <h3>5 erreurs qui tuent votre business en ligne</h3>
-          <p>Découvrez les pièges classiques des entrepreneurs camerounais et comment les éviter avec l'automatisation intelligente...</p>
-        </div>
-      </div>
-      
-      <div class="blog-card">
-        <div class="blog-image">🔒</div>
-        <div class="blog-content">
-          <div class="blog-date">10 JAN 2026</div>
-          <h3>Comment automatiser MoMo sans risque</h3>
-          <p>Guide complet pour sécuriser vos paiements Mobile Money avec l'API MTN/Orange et n8n. Étapes détaillées...</p>
-        </div>
-      </div>
-      
-      <div class="blog-card">
-        <div class="blog-image">📈</div>
-        <div class="blog-content">
-          <div class="blog-date">05 JAN 2026</div>
-          <h3>Cas client : +200% de ventes avec un bot</h3>
-          <p>Découvrez comment un e-commerce de mode à Douala a triplé son chiffre d'affaires en automatisant WhatsApp...</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Form -->
-  <section id="contact">
-    <h2 class="section-title">Une question ? Contactez-nous</h2>
-    <p class="section-subtitle">Réponse sous 2h en moyenne (7j/7)</p>
-    
-    <form class="contact-form" id="contactForm" onsubmit="handleContact(event)">
-      <div class="form-group">
-        <label for="name">Nom complet *</label>
-        <input type="text" id="name" name="name" required placeholder="Ex: Jean Kamdem">
-      </div>
-      
-      <div class="form-group">
-        <label for="business">Nom de l'entreprise *</label>
-        <input type="text" id="business" name="business" required placeholder="Ex: KamShop SARL">
-      </div>
-      
-      <div class="form-group">
-        <label for="sector">Secteur d'activité *</label>
-        <select id="sector" name="sector" required>
-          <option value="">Sélectionnez...</option>
-          <option value="ecommerce">E-commerce</option>
-          <option value="restaurant">Restaurant / Livraison</option>
-          <option value="formation">Formation en ligne</option>
-          <option value="immobilier">Immobilier</option>
-          <option value="services">Services B2B</option>
-          <option value="sante">Santé / Cliniques</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="message">Quelle tâche chronophage souhaitez-vous automatiser ? *</label>
-        <textarea id="message" name="message" required placeholder="Ex: Passer 3h/jour sur WhatsApp à répondre aux mêmes questions..."></textarea>
-      </div>
-      
-      <button type="submit" class="btn-primary" style="width: 100%;">
-        Envoyer ma demande
-      </button>
-      
-      <p style="text-align: center; margin-top: 1rem; color: var(--muted); font-size: 0.85rem;">
-        Ou contactez-nous directement sur <a href="https://wa.me/4915737746304" style="color: var(--accent);">WhatsApp</a>
-      </p>
-    </form>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="cta-section">
-    <h2>Prêt à passer à la vitesse supérieure ?</h2>
-    <p>Rejoignez les 50+ entreprises camerounaises qui automatisent déjà leur succès.</p>
-    <div class="cta-buttons">
-      <button class="btn-primary" onclick="window.open('https://wa.me/4915737746304?text=Je%20veux%20mon%20audit%20gratuit', '_blank')">
-        Réserver mon Audit Gratuit
-      </button>
-      <button class="btn-secondary" onclick="scrollToSection('tarifs')">
-        Voir les tarifs
-      </button>
-    </div>
-  </section>
-</main>
-
-<!-- Footer -->
-<footer>
-  <p style="margin-bottom: 1rem;">
-    <strong style="color: var(--text);">Expert n8n & Evolution API</strong><br>
-    Automatisation Business & Intelligence Artificielle
-  </p>
-  <p style="margin-bottom: 1rem;">
-    🇩🇪 Basé en Allemagne • 🇨🇲 Service Cameroun<br>
-    📞 WhatsApp : <a href="https://wa.me/4915737746304" target="_blank" rel="noopener noreferrer">+49 157 3774 6304</a>
-  </p>
-  <p style="font-size: 0.75rem; color: #64748b;">
-    <a href="#privacy">Politique de confidentialité</a> • 
-    <a href="#terms">Conditions générales</a> • 
-    <a href="#legal">Mentions légales</a>
-  </p>
-  <p style="margin-top: 2rem; font-size: 0.75rem;">
-    &copy; 2026 Expert n8n Cameroun • Tous droits réservés
-  </p>
-</footer>
-
-<!-- WhatsApp Float Button -->
-<a href="https://wa.me/4915737746304" 
-   class="wa-float" 
-   target="_blank" 
-   rel="noopener noreferrer"
-   aria-label="Nous contacter sur WhatsApp"
-   title="Discuter sur WhatsApp">
-  <svg width="30" height="30" fill="white" viewBox="0 0 16 16">
-    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.96L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-  </svg>
-</a>
-
-<!-- Exit Intent Popup -->
-<div class="exit-popup" id="exitPopup">
-  <div class="popup-content">
-    <button class="popup-close" onclick="closeExitPopup()" aria-label="Fermer">×</button>
-    <h2>⚠️ Attendez !</h2>
-    <p>Avant de partir, récupérez notre <strong>guide gratuit</strong> :</p>
-    <h3 style="color: var(--accent); margin: 1.5rem 0;">
-      "5 automatisations qui économisent 10h/semaine"
-    </h3>
-    <p style="margin-bottom: 2rem;">+ Checklist pour identifier les tâches à automatiser dans VOTRE business</p>
-    <button class="btn-primary" onclick="window.open('https://wa.me/4915737746304?text=Je%20veux%20le%20guide%20gratuit', '_blank')">
-      Recevoir le guide sur WhatsApp
-    </button>
+  <div class="top-banner">
+    🚀 Nouvelle offre : Audit gratuit + 1 mois de support offert jusqu'au 15 février 2026
+    <a href="#contact">En profiter →</a>
   </div>
-</div>
 
-<!-- Social Notification -->
-<div class="social-notification" id="socialNotif">
-  <div class="notification-avatar">👤</div>
-  <div class="notification-text">
-    <strong id="notifName">Jean</strong> à <span id="notifCity">Douala</span> vient de <span id="notifAction">consulter le Pack Business</span>
-  </div>
-</div>
+  <header>
+    <nav>
+      <div class="logo">
+        <div class="logo-icon">n8</div>
+        <span>Expert n8n Cameroun</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#workflow">Comment ça marche</a></li>
+        <li><a href="#pricing">Tarifs</a></li>
+        <li><a href="#testimonials">Témoignages</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="https://wa.me/4915737746304" class="btn btn-primary" target="_blank">Audit gratuit</a>
+      </div>
+    </nav>
+  </header>
 
-<!-- Cookie Consent -->
-<div class="cookie-consent" id="cookieConsent">
-  <div class="cookie-text">
-    🍪 Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre 
-    <a href="#privacy">politique de confidentialité</a>.
-  </div>
-  <div class="cookie-buttons">
-    <button class="btn-accept" onclick="acceptCookies()">Accepter</button>
-    <button class="btn-decline" onclick="declineCookies()">Refuser</button>
-  </div>
-</div>
+  <section class="hero container">
+    <div class="hero-badge">Expert certifié • Basé en Allemagne • Service Cameroun</div>
+    <h1>L'automatisation <span class="gradient-text">AI workflow</span> pour entreprises camerounaises</h1>
+    <p class="hero-subtitle">Déployez l'intelligence artificielle dans votre business avec n8n. De WhatsApp à Mobile Money, automatisez chaque processus.</p>
+    <div class="hero-cta">
+      <a href="#pricing" class="btn btn-primary btn-large">Découvrir nos solutions →</a>
+      <a href="#workflow" class="btn btn-secondary btn-large">Voir une démo</a>
+    </div>
+  </section>
 
-<script>
-  // ========== NAVIGATION ==========
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    const isExpanded = hamburger.classList.contains('active');
-    hamburger.setAttribute('aria-expanded', isExpanded);
-  });
-  
-  // Fermer le menu au clic sur un lien
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-      hamburger.setAttribute('aria-expanded', 'false');
-    });
-  });
-  
-  // ========== SMOOTH SCROLL ==========
-  function scrollToSection(id) {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  <section id="solutions" class="section container">
+    <div class="section-header">
+      <span class="section-tag">Nos solutions</span>
+      <h2 class="section-title">Automatisez chaque aspect de votre business</h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🤖</div>
+        <h3>Bots WhatsApp intelligents</h3>
+        <p>Assistants conversationnels IA qui gèrent vos clients 24h/24 sur votre numéro officiel.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💸</div>
+        <h3>Intégration Mobile Money</h3>
+        <p>Vérification automatique des paiements MTN et Orange Money via API sécurisée.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📊</div>
+        <h3>Workflows n8n</h3>
+        <p>Connectez vos applications favorites (Sheets, CRM, Emails) en un seul flux.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section container">
+    <div class="section-header">
+      <h2 class="section-title">Tarifs transparents</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in">
+        <div style="color:var(--primary); font-weight:700;">STARTER</div>
+        <div class="pricing-price">25.000 <span>FCFA</span></div>
+        <ul class="pricing-features">
+          <li>Vérification MoMo & Orange</li>
+          <li>Notifications instantanées</li>
+          <li>Support 7 jours</li>
+        </ul>
+        <a href="#" class="btn btn-secondary" style="width:100%; justify-content:center;">Choisir Starter</a>
+      </div>
+      <div class="pricing-card pricing-popular fade-in">
+        <div style="color:var(--primary); font-weight:700;">BUSINESS</div>
+        <div class="pricing-price">65.000 <span>FCFA</span></div>
+        <ul class="pricing-features">
+          <li>Tout du Pack Starter</li>
+          <li>Bot WhatsApp avec IA</li>
+          <li>Workflows personnalisés</li>
+          <li>Support 30 jours</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%; justify-content:center;">Démarrer Business</a>
+      </div>
+    </div>
+  </section>
+
+  <a href="https://wa.me/4915737746304" class="whatsapp-float">
+    <svg width="32" height="32" fill="white" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.96L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+  </a>
+
+  <script>
+    // --- 1. LOGIQUE CANVAS 3D (Noeuds & Connexions style n8n) ---
+    const canvas = document.getElementById('canvas3d');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function initCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-  }
-  
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').substring(1);
-      scrollToSection(targetId);
-    });
-  });
-  
-  // ========== ANIMATIONS AU SCROLL ==========
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
         }
-      });
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(255, 107, 74, 0.4)';
+            ctx.beginPath();
+            ctx.roundRect(this.x, this.y, 4, 4, 1); // Noeuds carrés n8n
+            ctx.fill();
+        }
+    }
+
+    function createParticles() {
+        particles = [];
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+            p.update(); p.draw();
+            for (let j = i + 1; j < particles.length; j++) {
+                const d = Math.hypot(p.x - particles[j].x, p.y - particles[j].y);
+                if (d < 150) {
+                    ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - d/150)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(p.x+2, p.y+2); ctx.lineTo(particles[j].x+2, particles[j].y+2); ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+
+    // --- 2. Animations au scroll ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-    
-    document.querySelectorAll('.card').forEach(card => {
-      observer.observe(card);
-    });
-  } else {
-    // Fallback pour vieux navigateurs
-    document.querySelectorAll('.card').forEach(card => {
-      card.classList.add('visible');
-    });
-  }
-  
-  // ========== STATS COUNTER ==========
-  function animateCounter(element) {
-    const target = parseInt(element.getAttribute('data-target'));
-    const duration = 2000;
-    const increment = target / (duration / 16);
-    let current = 0;
-    
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
-      element.textContent = Math.floor(current);
-    }, 16);
-  }
-  
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const counters = entry.target.querySelectorAll('.stat-number');
-        counters.forEach(counter => animateCounter(counter));
-        statsObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  
-  const statsSection = document.querySelector('.stats-grid');
-  if (statsSection) statsObserver.observe(statsSection);
-  
-  // ========== FAQ ACCORDION ==========
-  document.querySelectorAll('.faq-question').forEach(question => {
-    question.addEventListener('click', () => {
-      const faqItem = question.parentElement;
-      const isActive = faqItem.classList.contains('active');
-      
-      // Fermer tous les autres
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      
-      // Toggle current
-      if (!isActive) {
-        faqItem.classList.add('active');
-      }
-    });
-  });
-  
-  // ========== ROI CALCULATOR ==========
-  function calculateROI() {
-    const whatsapp = parseInt(document.getElementById('whatsappTime').value);
-    const payment = parseInt(document.getElementById('paymentTime').value);
-    const admin = parseInt(document.getElementById('adminTime').value);
-    
-    document.getElementById('whatsappValue').textContent = whatsapp + 'h/semaine';
-    document.getElementById('paymentValue').textContent = payment + 'h/semaine';
-    document.getElementById('adminValue').textContent = admin + 'h/semaine';
-    
-    // Calcul économie (80% de réduction du temps)
-    const totalWeekly = whatsapp + payment + admin;
-    const savedWeekly = totalWeekly * 0.8;
-    const savedMonthly = Math.round(savedWeekly * 4);
-    const moneySaved = Math.round(savedMonthly * 3000);
-    
-    document.getElementById('timesSaved').textContent = savedMonthly + 'h/mois';
-    document.getElementById('moneySaved').textContent = moneySaved.toLocaleString('fr-FR') + ' FCFA';
-  }
-  
-  // Init calculator
-  calculateROI();
-  
-  // ========== TESTIMONIALS SLIDER ==========
-  let currentTestimonial = 0;
-  const testimonials = document.querySelectorAll('.testimonial');
-  const totalTestimonials = testimonials.length;
-  
-  function slideTestimonials() {
-    currentTestimonial = (currentTestimonial + 1) % (totalTestimonials - 2);
-    const slider = document.querySelector('.testimonials-slider');
-    if (slider) {
-      slider.style.transform = `translateX(-${currentTestimonial * (350 + 32)}px)`;
-    }
-  }
-  
-  setInterval(slideTestimonials, 5000);
-  
-  // ========== EXIT INTENT POPUP ==========
-  let exitIntentShown = false;
-  
-  document.addEventListener('mouseleave', (e) => {
-    if (e.clientY <= 0 && !exitIntentShown) {
-      exitIntentShown = true;
-      document.getElementById('exitPopup').classList.add('active');
-    }
-  });
-  
-  function closeExitPopup() {
-    document.getElementById('exitPopup').classList.remove('active');
-  }
-  
-  // Fermer au clic outside
-  document.getElementById('exitPopup').addEventListener('click', (e) => {
-    if (e.target.id === 'exitPopup') {
-      closeExitPopup();
-    }
-  });
-  
-  // ========== SOCIAL NOTIFICATIONS ==========
-  const notifications = [
-    { name: 'Jean', city: 'Douala', action: 'commandé le Pack Business' },
-    { name: 'Marie', city: 'Yaoundé', action: 'consulté cette page' },
-    { name: 'Paul', city: 'Bafoussam', action: 'demandé un audit gratuit' },
-    { name: 'Éric', city: 'Limbé', action: 'téléchargé le guide gratuit' },
-    { name: 'Sophie', city: 'Garoua', action: 'commandé le Pack Start' }
-  ];
-  
-  let notifIndex = 0;
-  
-  function showSocialNotification() {
-    const notif = notifications[notifIndex];
-    document.getElementById('notifName').textContent = notif.name;
-    document.getElementById('notifCity').textContent = notif.city;
-    document.getElementById('notifAction').textContent = notif.action;
-    
-    const notifElement = document.getElementById('socialNotif');
-    notifElement.classList.add('show');
-    
-    setTimeout(() => {
-      notifElement.classList.remove('show');
-    }, 5000);
-    
-    notifIndex = (notifIndex + 1) % notifications.length;
-  }
-  
-  // Première notification après 10 secondes
-  setTimeout(showSocialNotification, 10000);
-  // Puis toutes les 20 secondes
-  setInterval(showSocialNotification, 20000);
-  
-  // ========== COOKIE CONSENT ==========
-  window.addEventListener('load', () => {
-    const cookieAccepted = localStorage.getItem('cookieConsent');
-    if (!cookieAccepted) {
-      setTimeout(() => {
-        document.getElementById('cookieConsent').classList.add('show');
-      }, 2000);
-    }
-  });
-  
-  function acceptCookies() {
-    localStorage.setItem('cookieConsent', 'true');
-    document.getElementById('cookieConsent').classList.remove('show');
-    // Ici vous pouvez activer Google Analytics, etc.
-  }
-  
-  function declineCookies() {
-    localStorage.setItem('cookieConsent', 'false');
-    document.getElementById('cookieConsent').classList.remove('show');
-  }
-  
-  // ========== PROMO BAR ==========
-  function closePromo() {
-    document.getElementById('promoBar').style.display = 'none';
-    localStorage.setItem('promoClosed', 'true');
-  }
-  
-  window.addEventListener('load', () => {
-    if (localStorage.getItem('promoClosed') === 'true') {
-      document.getElementById('promoBar').style.display = 'none';
-    }
-  });
-  
-  // ========== CONTACT FORM ==========
-  function handleContact(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const business = document.getElementById('business').value;
-    const sector = document.getElementById('sector').value;
-    const message = document.getElementById('message').value;
-    
-    const whatsappMessage = `🚀 NOUVELLE DEMANDE DE CONTACT\n\n` +
-      `👤 Nom: ${name}\n` +
-      `🏢 Entreprise: ${business}\n` +
-      `📊 Secteur: ${sector}\n` +
-      `💬 Message: ${message}`;
-    
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/4915737746304?text=${encodedMessage}`, '_blank');
-    
-    // Reset form
-    document.getElementById('contactForm').reset();
-    alert('✅ Votre message a été envoyé ! Nous vous répondrons sous 2h.');
-  }
-  
-  // ========== ANALYTICS TRACKING (si vous avez GA4) ==========
-  function trackEvent(eventName, params = {}) {
-    if (typeof gtag !== 'undefined') {
-      gtag('event', eventName, params);
-    }
-    console.log('Event tracked:', eventName, params);
-  }
-  
-  // Tracking des clics CTA
-  document.querySelectorAll('.btn-primary').forEach(btn => {
-    btn.addEventListener('click', () => {
-      trackEvent('cta_click', {
-        button_text: btn.textContent.trim(),
-        button_location: btn.closest('section')?.id || 'unknown'
-      });
-    });
-  });
-  
-  // ========== PERFORMANCE ==========
-  // Lazy load images (si vous en ajoutez)
-  if ('loading' in HTMLImageElement.prototype) {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-      img.src = img.dataset.src;
-    });
-  }
-  
-  console.log('%c🚀 Expert n8n Cameroun', 'color: #6366f1; font-size: 20px; font-weight: bold;');
-  console.log('%cAutomatisation Business & IA', 'color: #22c55e; font-size: 14px;');
-  console.log('%c📞 WhatsApp: +49 157 3774 6304', 'color: #94a3b8; font-size: 12px;');
-</script>
 
-<!-- Google Analytics 4 (remplacez G-XXXXXXXXXX par votre ID) -->
-<!--
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
--->
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+    initCanvas(); createParticles(); animate();
+    window.addEventListener('resize', () => { initCanvas(); createParticles(); });
+  </script>
 </body>
 </html>
 

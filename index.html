@@ -2106,19 +2106,20 @@
 </body>
 
       <script>
-        // Gestionnaire formulaire de contact
-        const contactForm = document.getElementById('contactForm');
+// --- GESTIONNAIRE UNIQUE DU FORMULAIRE ---
+const contactForm = document.getElementById('contactForm');
+
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const form = e.target;
         const submitBtn = form.querySelector('.btn-submit');
-        const originalBtnContent = submitBtn.innerHTML;
+        const formMessage = document.getElementById('formMessage');
         
         // 1. État visuel "Envoi en cours"
         submitBtn.classList.add('loading');
-        submitBtn.innerHTML = '⚡ Traitement par n8n...';
+        submitBtn.innerHTML = '⚡ Connexion au workflow n8n...';
 
         const formData = {
             name: document.getElementById('name').value,
@@ -2127,11 +2128,12 @@ if (contactForm) {
             company: document.getElementById('company').value,
             service: document.getElementById('service').value,
             message: document.getElementById('message').value,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            source: 'Website Expert n8n'
         };
 
         try {
-            // Remplace par ton vrai Webhook n8n
+            // URL DE TON WEBHOOK N8N
             const response = await fetch('https://automation-cameroun.xyz/webhook/contact-form', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -2139,7 +2141,7 @@ if (contactForm) {
             });
 
             if (response.ok) {
-                // 2. Animation de succès : on remplace le contenu du formulaire
+                // 2. Animation de succès
                 form.style.transition = 'opacity 0.3s ease';
                 form.style.opacity = '0';
                 
@@ -2147,27 +2149,27 @@ if (contactForm) {
                     form.parentElement.innerHTML = `
                         <div class="success-overlay">
                             <div class="success-icon">✓</div>
-                            <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Message Reçu !</h3>
+                            <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: white;">Demande Reçue !</h3>
                             <p style="color: var(--text-secondary);">
-                                Notre agent IA vient de router votre demande vers notre équipe.<br>
-                                <strong>On vous recontacte sur WhatsApp d'ici 2h.</strong>
+                                Le workflow d'automatisation a bien reçu vos données.<br>
+                                <strong>Notre expert vous contactera sur WhatsApp d'ici 2h.</strong>
                             </p>
                             <button onclick="location.reload()" class="btn btn-secondary" style="margin-top: 25px;">
-                                Envoyer un autre message
+                                Envoyer une autre demande
                             </button>
                         </div>
                     `;
                 }, 300);
-                
             } else {
-                throw new Error('Erreur');
+                throw new Error('Erreur Serveur');
             }
         } catch (error) {
+            console.error('Erreur:', error);
             submitBtn.classList.remove('loading');
             submitBtn.innerHTML = '❌ Erreur, réessayer ?';
-            alert("Oups ! Connexion impossible avec le serveur d'automatisation. Vérifiez votre internet.");
+            alert("Impossible de joindre le serveur n8n. Vérifiez que votre workflow est bien 'Active' dans n8n.");
         }
     });
 }
-    </script>
+</script>
 </html>

@@ -7,10 +7,9 @@
   <meta name="description" content="Plateforme d'automatisation n8n pour PME camerounaises. WhatsApp Business, Mobile Money, workflows intelligents. Déployez l'IA dans votre business." />
   <meta name="theme-color" content="#0F172A" />
   
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -1347,9 +1346,9 @@
   <header>
     <nav>
       <div class="logo">
-  <img src="favicon.png" alt="TGM Logo" style="width: 36px; height: 36px; border-radius: 6px;">
-  <span>TGM Automation</span>
-</div>
+        <div class="logo-icon">GM</div>
+        <span>TGM Automation</span>
+      </div>
       
       <ul class="nav-links">
         <li><a href="#solutions">Solutions</a></li>
@@ -1471,6 +1470,27 @@
       </div>
 
       <div class="feature-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">🤖</div>
+          <h3>Bots WhatsApp intelligents</h3>
+          <p>
+            Assistants conversationnels alimentés par IA qui gèrent vos clients 24/7. 
+            Qualification de leads, réponses instantanées, prise de commandes automatique 
+            sur votre numéro WhatsApp Business officiel.
+          </p>
+        </div>
+
+        <div class="feature-card fade-in">
+          <div class="feature-icon">💸</div>
+          <h3>Intégration Mobile Money</h3>
+          <p>
+            Vérification automatique des paiements MTN et Orange Money via API. 
+            Éliminez les captures d'écran falsifiées, réconciliation bancaire instantanée, 
+            notifications en temps réel.
+          </p>
+        </div>
+
+        <div class="feature-grid">
   <div class="feature-card fade-in">
     <div class="feature-icon">⚡</div>
     <h3>Vente Conversationnelle</h3>
@@ -1489,6 +1509,7 @@
     <p>Ne devinez plus, sachez. Nous centralisons vos opérations dans des tableaux de bord dynamiques pour une vision claire de votre rentabilité en temps réel.</p>
   </div>
 </div>
+    </div>
   </section>
 
   <section class="section">
@@ -1557,8 +1578,8 @@
           </p>
           <ul class="pricing-features">
             <li>Vérification automatique MoMo & Orange</li>
-            <li>Notifications instantanées</li>
-            <li>Dashboard</li>
+            <li>Notifications n8n instantanées</li>
+            <li>Dashboard Google Sheets</li>
             <li>Documentation complète</li>
             <li>Support 7 jours</li>
           </ul>
@@ -1584,10 +1605,10 @@
           </p>
           <ul class="pricing-features">
             <li><strong>Tout le Pack Starter inclus</strong></li>
-            <li>Vente Conversationnelle Automatisée</li>
+            <li>Bot WhatsApp avec IA (Evolution API)</li>
             <li>Gestion de stock automatisée</li>
-            <li>Base de données Pro</li>
-            <li>Systèmes d'Exploitation Business sur mesure</li>
+            <li>Base de données Airtable Pro</li>
+            <li>Workflows personnalisés n8n</li>
             <li>Formation vidéo (2h)</li>
             <li>Support prioritaire 30 jours</li>
           </ul>
@@ -1613,7 +1634,7 @@
           <ul class="pricing-features">
             <li><strong>Tout le Pack Business inclus</strong></li>
             <li>Infrastructure dédiée on-premise</li>
-            <li>Intégrations CRM custom</li>
+            <li>Intégrations ERP/CRM custom</li>
             <li>Multi-utilisateurs & RBAC</li>
             <li>SLA 99.9% uptime garanti</li>
             <li>Formation équipe complète</li>
@@ -1713,10 +1734,10 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo">
-  <img src="favicon.png" alt="TGM Logo" style="width: 36px; height: 36px; border-radius: 6px;">
-  <span>TGM Automation</span>
-</div>
+          <div class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon">TGM</div>
+            <span>TGM Automation</span>
+          </div>
           <p>
             Plateforme d'automatisation workflow et intelligence artificielle pour entreprises africaines. 
           
@@ -1731,9 +1752,9 @@
         <div class="footer-column">
           <h4>Solutions</h4>
           <ul class="footer-links">
-            <li><a href="#solutions">Vente Conversationnelle Automatisée</a></li>
-            <li><a href="#solutions">Sécurisation de Flux Financiers (MoMo/Orange)</a></li>
-            <li><a href="#solutions">Systèmes d'Exploitation Business sur mesure</a></li>
+            <li><a href="#solutions">Bots WhatsApp</a></li>
+            <li><a href="#solutions">Mobile Money</a></li>
+            <li><a href="#solutions">Workflows n8n</a></li>
             <li><a href="#pricing">Tarifs</a></li>
           </ul>
         </div>
@@ -2002,10 +2023,10 @@
             <label for="service">Service intéressé *</label>
             <select id="service" name="service" required>
               <option value="">-- Choisir un service --</option>
-              <option value="Bot WhatsApp">Vente Conversationnelle Automatisée</option>
-              <option value="Mobile Money">Sécurisation de Flux Financiers (MoMo/Orange)</option>
+              <option value="Bot WhatsApp">Bot WhatsApp IA</option>
+              <option value="Mobile Money">Intégration Mobile Money</option>
               <option value="Dashboard">Tableau de bord temps réel</option>
-              <option value="Workflows">Systèmes d'Exploitation Business sur mesure</option>
+              <option value="Workflows">Workflows personnalisés</option>
               <option value="Audit">Audit gratuit</option>
               <option value="Autre">Autre</option>
             </select>
@@ -2060,72 +2081,4 @@
   </div>
 </section>
 </body>
-
-      <script>
-// --- GESTIONNAIRE UNIQUE DU FORMULAIRE ---
-const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const form = e.target;
-        const submitBtn = form.querySelector('.btn-submit');
-        const formMessage = document.getElementById('formMessage');
-        
-        // 1. État visuel "Envoi en cours"
-        submitBtn.classList.add('loading');
-        submitBtn.innerHTML = '⚡ Connexion au workflow TGM Automation...';
-
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            company: document.getElementById('company').value,
-            service: document.getElementById('service').value,
-            message: document.getElementById('message').value,
-            timestamp: new Date().toISOString(),
-            source: 'Website Expert TGM Automation'
-        };
-
-        try {
-            // URL DE TON WEBHOOK N8N
-            const response = await fetch('https://automation-cameroun.xyz/webhook/contact-form', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-
-            if (response.ok) {
-                // 2. Animation de succès
-                form.style.transition = 'opacity 0.3s ease';
-                form.style.opacity = '0';
-                
-                setTimeout(() => {
-                    form.parentElement.innerHTML = `
-                        <div class="success-overlay">
-                            <div class="success-icon">✓</div>
-                            <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: white;">Demande Reçue !</h3>
-                            <p style="color: var(--text-secondary);">
-                                Le workflow d'automatisation a bien reçu vos données.<br>
-                                <strong>Notre expert TGM Automation vous contactera sur WhatsApp d'ici 2h.</strong>
-                            </p>
-                            <button onclick="location.reload()" class="btn btn-secondary" style="margin-top: 25px;">
-                                Envoyer une autre demande
-                            </button>
-                        </div>
-                    `;
-                }, 300);
-            } else {
-                throw new Error('Erreur Serveur');
-            }
-        } catch (error) {
-            console.error('Erreur:', error);
-            submitBtn.classList.remove('loading');
-            submitBtn.innerHTML = '❌ Erreur, réessayer ?';
-            alert("Impossible de joindre le serveur TGM Automation. Vérifiez que votre workflow est bien 'Active' dans TGM Automation.");
-        }
-    }); 
-}
-</script>
 </html>

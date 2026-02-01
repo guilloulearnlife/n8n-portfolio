@@ -2106,120 +2106,39 @@
 </body>
 
      <script>
-  // --- 1. LOGIQUE CANVAS 3D ---
-  const canvas = document.getElementById('canvas3d');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-
-  function initCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-  }
-
-  // SUIVI DE LA SOURIS POUR LE GLOW (Cartes et Formulaire)
-  document.addEventListener("mousemove", e => {
-      const targets = document.querySelectorAll(".feature-card, .pricing-card, .contact-form, .info-card, .workflow-node");
-      targets.forEach(card => {
-          const rect = card.getBoundingClientRect();
-          card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-          card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-      });
-  });
-
-  class Particle {
-      constructor() { this.reset(); }
-      reset() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.vx = (Math.random() - 0.5) * 0.4;
-          this.vy = (Math.random() - 0.5) * 0.4;
-          this.radius = Math.random() * 1.5 + 1;
-      }
-      update() {
-          this.x += this.vx; this.y += this.vy;
-          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-  }
-
-  function createParticles() {
-      particles = [];
-      const count = Math.min(Math.floor(window.innerWidth / 8), 150);
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-  }
-
-  function animateCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-          p.update();
-          ctx.fillStyle = 'rgba(255, 107, 74, 0.6)';
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
-          for (let j = i + 1; j < particles.length; j++) {
-              const p2 = particles[j];
-              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-              if (dist < 150) {
-                  ctx.strokeStyle = `rgba(139, 92, 246, ${0.2 * (1 - dist/150)})`;
-                  ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-              }
-          }
-      });
-      requestAnimationFrame(animateCanvas);
-  }
-
-  initCanvas(); createParticles(); animateCanvas();
-  window.addEventListener('resize', () => { initCanvas(); createParticles(); });
-
-  // --- 2. GESTIONNAIRE DE FORMULAIRE (UNIQUE) ---
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          
-          const form = e.target;
-          const submitBtn = form.querySelector('.btn-submit');
-          
-          // État visuel "Envoi"
-          submitBtn.classList.add('loading');
-          submitBtn.innerHTML = '⚡ Connexion à n8n...';
-
-          const formData = {
-              name: document.getElementById('name').value,
-              email: document.getElementById('email').value,
-              phone: document.getElementById('phone').value,
-              company: document.getElementById('company').value,
-              service: document.getElementById('service').value,
-              message: document.getElementById('message').value,
-              timestamp: new Date().toISOString()
-          };
-
-          try {
-              // UTILISATION DE TON URL RÉELLE
-              const response = await fetch('https://automation-cameroun.xyz/webhook/contact-form', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(formData)
-              });
-
-              if (response.ok) {
-                  form.style.opacity = '0';
-                  setTimeout(() => {
-                      form.parentElement.innerHTML = `
-                          <div class="success-overlay">
-                              <div class="success-icon">✓</div>
-                              <h3 style="color:white; font-size:1.8rem;">Demande Envoyée !</h3>
-                              <p style="color:var(--text-secondary); margin-top:10px;">
-                                Le workflow n8n a bien reçu vos infos.<br>On vous contacte sur WhatsApp.
-                              </p>
-                              <button onclick="location.reload()" class="btn btn-secondary" style="margin-top:20px;">Nouvelle demande</button>
-                          </div>`;
-                  }, 300);
-              } else { throw new Error(); }
-          } catch (error) {
-              submitBtn.classList.remove('loading');
-              submitBtn.innerHTML = '❌ Erreur, réessayer ?';
-              alert("Le serveur n8n est injoignable. Vérifiez que votre workflow est bien en mode 'Active'.");
-          }
-      });
-  }
-</script>
+        // Gestionnaire formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                company: document.getElementById('company').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toISOString(),
+                source: 'Website Portfolio'
+            };
+            
+            try {
+                const response = await fetch('https://automation-cameroun.xyz/webhook/contact-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    document.getElementById('formMessage').innerHTML = '<div style="color: #10B981; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; margin-top: 1rem;">✓ Merci! Votre message a \u00e9t\u00e9 envoy\u00e9 avec succ\u00e8s.</div>';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Erreur serveur');
+                }
+            } catch (error) {
+                document.getElementById('formMessage').innerHTML = '<div style="color: #EF4444; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; margin-top: 1rem;">✗ Une erreur est survenue. Veuillez r\u00e9essayer.</div>';
+            }
+        });
+    </script>
 </html>

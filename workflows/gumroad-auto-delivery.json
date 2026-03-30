@@ -1,0 +1,258 @@
+{
+  "name": "Gumroad Sale → Auto Delivery + Lead Nurture (Zoho Mail)",
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "nodes": [
+    {
+      "id": "8ad21b36-b690-4e7c-a7ed-ff71317ce2df",
+      "name": "Webhook — Gumroad Sale",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [-480, -128],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gumroad-sale",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "notes": "Configure this URL in Gumroad: Dashboard > Settings > Webhooks"
+    },
+    {
+      "id": "455aeeae-5175-49a5-8cf4-aa389f8c85dd",
+      "name": "IF — Vérifier non remboursé",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [-272, -128],
+      "parameters": {
+        "conditions": {
+          "boolean": [{ "value1": "={{ $json.body.refunded }}", "value2": false }]
+        }
+      }
+    },
+    {
+      "id": "5f444b7c-4894-4885-a6da-660e12075433",
+      "name": "Supabase — Enregistrer achat",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-80, -128],
+      "parameters": {
+        "tableId": "purchases",
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "email", "fieldValue": "={{ $json.body.email }}" },
+            { "fieldId": "product_name", "fieldValue": "={{ $json.body.product_name }}" },
+            { "fieldId": "gumroad_id", "fieldValue": "={{ $json.body.sale_id }}" },
+            { "fieldId": "purchased_at", "fieldValue": "={{ $json.body.created_at }}" },
+            { "fieldId": "amount", "fieldValue": "={{ $json.body.price }}" },
+            { "fieldId": "currency", "fieldValue": "={{ $json.body.currency }}" }
+          ]
+        }
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase API" }
+      }
+    },
+    {
+      "id": "4d16e28e-807e-43c6-b2d7-fe6b96ebba1e",
+      "name": "Zoho Mail — Email livraison produit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [96, -128],
+      "parameters": {
+        "method": "POST",
+        "url": "https://mail.zoho.eu/api/accounts/YOUR_ZOHO_ACCOUNT_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "={\"Content-Type\": \"application/json\"}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fromAddress\": \"contact@YOUR_DOMAIN.com\",\n  \"toAddress\": \"{{ $json.body.email }}\",\n  \"subject\": \"🎉 Ton produit est prêt !\",\n  \"mailFormat\": \"html\",\n  \"content\": \"<h1>Merci pour ton achat !</h1><p>Accède à ton contenu : <a href='{{ $json.body.permalink }}'>Cliquer ici</a></p><p>Des questions ? Réponds à cet email.</p>\"\n}"
+      },
+      "credentials": {
+        "oAuth2Api": { "id": "YOUR_CREDENTIAL_ID", "name": "Zoho Mail OAuth2" }
+      }
+    },
+    {
+      "id": "0703b39b-b9eb-49dd-bed0-44b84c1df296",
+      "name": "Telegram — Notif nouvelle vente",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [320, -128],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": \"{{ $env.TELEGRAM_CHAT_ID }}\",\n  \"text\": \"💰 Nouvelle vente !\\n\\nProduit: {{ $('Supabase — Enregistrer achat').item.json.product_name }}\\nMontant: {{ $('Supabase — Enregistrer achat').item.json.amount }}€\\nClient: {{ $('Supabase — Enregistrer achat').item.json.email }}\",\n  \"parse_mode\": \"HTML\"\n}",
+        "options": {}
+      },
+      "notes": "Remplace Discord par Telegram pour les notifications — plus simple et natif n8n"
+    },
+    {
+      "id": "12ae860c-4c96-4453-937a-d909b0e596ff",
+      "name": "Respond — Succès Gumroad",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [512, -128],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true } }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "8302a365-b15c-47b5-9eef-03afdcb73b88",
+      "name": "Webhook — Lead Capture (Formulaire gratuit)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [-464, 96],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "notes": "Webhook pour formulaire lead magnet (ebook gratuit, etc.)"
+    },
+    {
+      "id": "4a90d3cf-6cdc-4033-b1af-5ac731805280",
+      "name": "Supabase — Enregistrer lead",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-256, 96],
+      "parameters": { "tableId": "leads" },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase API" }
+      }
+    },
+    {
+      "id": "104a3d52-893a-4ade-94fa-28d6d1b1a913",
+      "name": "Zoho Mail — Lead Magnet (email J+0)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-48, 96],
+      "parameters": {
+        "method": "POST",
+        "url": "https://mail.zoho.eu/api/accounts/YOUR_ZOHO_ACCOUNT_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "={\"Content-Type\": \"application/json\"}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fromAddress\": \"contact@YOUR_DOMAIN.com\",\n  \"toAddress\": \"{{ $json.body.email }}\",\n  \"subject\": \"🎁 Tes 5 workflows n8n gratuits\",\n  \"mailFormat\": \"html\",\n  \"content\": \"<h1>Hey {{ $json.body.first_name || 'toi' }} ! 👋</h1><p>Voici ton guide : <a href='YOUR_LEAD_MAGNET_URL'>Télécharger</a></p><p>Tu vas recevoir des tips d'automatisation pendant 14 jours.</p><p>À très vite,<br>Guillou — TGM Automation</p>\"\n}"
+      },
+      "credentials": {
+        "oAuth2Api": { "id": "YOUR_CREDENTIAL_ID", "name": "Zoho Mail OAuth2" }
+      }
+    },
+    {
+      "id": "51e944bd-d25a-41d6-8cd8-694c192fd6a1",
+      "name": "Respond — Succès lead capture",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [336, 96],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Check your email!\" } }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "7f9bda1b-5801-480c-b626-10ded0d811b0",
+      "name": "Schedule — Séquence emails J+1 à J+14",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [-464, -320],
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 9 * * *" }] }
+      },
+      "notes": "Tourne tous les jours à 9h — envoie l'email du jour à tous les leads actifs"
+    },
+    {
+      "id": "c9d459d9-2bd9-4116-ad5f-637469462dad",
+      "name": "Supabase — Récupérer leads actifs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-256, -320],
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "leads",
+        "limit": 100
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase API" }
+      }
+    },
+    {
+      "id": "8f3cb714-8a07-42cc-ae28-309bdc5af235",
+      "name": "Split — Traiter par batch de 10",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-64, -320],
+      "parameters": { "batchSize": 10, "options": {} }
+    },
+    {
+      "id": "184beafe-40bb-48c7-be81-fd4915ee01c4",
+      "name": "Code — Détermine contenu email du jour",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [144, -320],
+      "parameters": {
+        "jsCode": "// Séquence emails 5 jours (J+1 à J+5)\n// Adapte les sujets et contenus à ton produit\nconst emailSequence = [\n  {\n    subject: \"🎯 L'erreur #1 qui tue la productivité\",\n    body: `<h1>Hey {{first_name}} 👋</h1><p>95% des entrepreneurs font cette erreur : ils passent 3h/jour sur des tâches automatisables.</p><p>Demain, je te montre comment y remédier en 2h.</p><p>Guillou — TGM Automation</p>`\n  },\n  {\n    subject: \"💡 Comment j'ai automatisé mon onboarding client\",\n    body: `<h1>Salut {{first_name}},</h1><p>Nouveau client → il reçoit automatiquement contrat + accès + welcome pack. Mon intervention : 0 minute.</p><p>Le workflow complet dans le pack complet.</p>`\n  },\n  {\n    subject: \"📊 Cas réel : de 40h à 15h/semaine\",\n    body: `<h1>{{first_name}}, une histoire vraie :</h1><p>40h de travail/semaine, dont 25h d'admin. Résultat après 5 workflows : 15h/semaine, +3 clients.</p><p>Tu veux le même système ? <a href='YOUR_PRODUCT_URL'>C'est ici</a></p>`\n  },\n  {\n    subject: \"🔧 Workflow gratuit : Qualification prospects\",\n    body: `<h1>Cadeau {{first_name}} 🎁</h1><p>Ce workflow qualifie tes prospects automatiquement. <a href='YOUR_LEAD_MAGNET_URL'>Télécharge-le ici</a> — installe en 10min.</p>`\n  },\n  {\n    subject: \"⚡ Dernière chance : -30% (48h)\",\n    body: `<h1>{{first_name}}, dernière ligne droite</h1><p>Code promo <strong>EARLYBIRD30</strong> pour -30% sur le pack complet. <a href='YOUR_PRODUCT_URL?code=EARLYBIRD30'>Démarrer maintenant</a></p><p><small>Expire dans 48h</small></p>`\n  }\n];\n\nconst step = $input.item.json.sequence_step || 0;\nconst emailData = emailSequence[step] || emailSequence[0];\nconst firstName = $input.item.json.first_name || 'toi';\n\nreturn {\n  json: {\n    ...$input.item.json,\n    email_subject: emailData.subject,\n    email_body: emailData.body.replace(/{{first_name}}/g, firstName)\n  }\n};"
+      }
+    },
+    {
+      "id": "9b96ed8e-bb58-42bb-a69c-3f24ed2e2fd1",
+      "name": "Zoho Mail — Envoyer email séquence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [352, -320],
+      "parameters": {
+        "method": "POST",
+        "url": "https://mail.zoho.eu/api/accounts/YOUR_ZOHO_ACCOUNT_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "={\"Content-Type\": \"application/json\"}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fromAddress\": \"contact@YOUR_DOMAIN.com\",\n  \"toAddress\": \"{{ $json.email }}\",\n  \"subject\": \"{{ $json.email_subject }}\",\n  \"mailFormat\": \"html\",\n  \"content\": \"{{ $json.email_body }}\"\n}"
+      },
+      "credentials": {
+        "oAuth2Api": { "id": "YOUR_CREDENTIAL_ID", "name": "Zoho Mail OAuth2" }
+      }
+    },
+    {
+      "id": "2fcd212f-f45b-4d4a-8c40-f6d619bc5300",
+      "name": "Supabase — Incrémenter sequence_step",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [544, -320],
+      "parameters": { "operation": "update", "tableId": "leads" },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase API" }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook — Gumroad Sale": { "main": [[{ "node": "IF — Vérifier non remboursé", "type": "main", "index": 0 }]] },
+    "IF — Vérifier non remboursé": { "main": [[{ "node": "Supabase — Enregistrer achat", "type": "main", "index": 0 }]] },
+    "Supabase — Enregistrer achat": { "main": [[{ "node": "Zoho Mail — Email livraison produit", "type": "main", "index": 0 }]] },
+    "Zoho Mail — Email livraison produit": { "main": [[{ "node": "Telegram — Notif nouvelle vente", "type": "main", "index": 0 }]] },
+    "Telegram — Notif nouvelle vente": { "main": [[{ "node": "Respond — Succès Gumroad", "type": "main", "index": 0 }]] },
+    "Webhook — Lead Capture (Formulaire gratuit)": { "main": [[{ "node": "Supabase — Enregistrer lead", "type": "main", "index": 0 }]] },
+    "Supabase — Enregistrer lead": { "main": [[{ "node": "Zoho Mail — Lead Magnet (email J+0)", "type": "main", "index": 0 }]] },
+    "Zoho Mail — Lead Magnet (email J+0)": { "main": [[{ "node": "Respond — Succès lead capture", "type": "main", "index": 0 }]] },
+    "Schedule — Séquence emails J+1 à J+14": { "main": [[{ "node": "Supabase — Récupérer leads actifs", "type": "main", "index": 0 }]] },
+    "Supabase — Récupérer leads actifs": { "main": [[{ "node": "Split — Traiter par batch de 10", "type": "main", "index": 0 }]] },
+    "Split — Traiter par batch de 10": { "main": [[{ "node": "Code — Détermine contenu email du jour", "type": "main", "index": 0 }]] },
+    "Code — Détermine contenu email du jour": { "main": [[{ "node": "Zoho Mail — Envoyer email séquence", "type": "main", "index": 0 }]] },
+    "Zoho Mail — Envoyer email séquence": { "main": [[{ "node": "Supabase — Incrémenter sequence_step", "type": "main", "index": 0 }]] }
+  },
+  "tags": ["gumroad", "email-marketing", "zoho-mail", "lead-nurture", "supabase", "e-commerce"]
+}

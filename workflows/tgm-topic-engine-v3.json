@@ -1,0 +1,220 @@
+{
+  "name": "TGM — Topic Engine v3 (Auto-Recyclage + fal.ai + Google Drive)",
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "nodes": [
+    {
+      "id": "eab6eae6-b921-4b63-ab47-88160668da11",
+      "name": "Schedule — Lun/Mer/Ven 8h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [912, -368],
+      "parameters": {
+        "rule": { "interval": [{ "field": "cronExpression", "expression": "0 8 * * 1,3,5" }] }
+      }
+    },
+    {
+      "id": "ee9dcfdf-6937-4e35-9537-3c3c688840eb",
+      "name": "Code — Détermine angle du jour",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, -208],
+      "parameters": {
+        "jsCode": "// Associe chaque jour de la semaine à un angle éditorial\n// Lundi=money, Mercredi=tools, Vendredi=pme\nconst DAY_TO_ANGLE = { 1: 'money', 3: 'tools', 5: 'pme' };\nconst DAY_LABELS = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];\nconst now = new Date();\nconst jour = now.getDay();\nconst angle = DAY_TO_ANGLE[jour];\nif (!angle) throw new Error('Pas de publication prévue aujourd\\'hui (jour ' + jour + ')');\nreturn [{ json: { angle, jour: DAY_LABELS[jour], date: now.toISOString().split('T')[0] } }];"
+      }
+    },
+    {
+      "id": "aec8765d-e009-4927-9bf8-6d1652eecc06",
+      "name": "Supabase — SELECT sujets disponibles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [912, -80],
+      "parameters": {
+        "url": "=https://YOUR_SUPABASE_URL/rest/v1/tgm_carousel_history",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "statut", "value": "eq.disponible" },
+            { "name": "angle", "value": "={{ $json.angle }}" },
+            { "name": "select", "value": "id,sujet,angle,format,hook" },
+            { "name": "order", "value": "created_at.asc" },
+            { "name": "limit", "value": "20" }
+          ]
+        }
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase — TGM" }
+      }
+    },
+    {
+      "id": "67b49c72-e7ed-4fcc-a849-e9037533cd76",
+      "name": "Code — Choisit sujet (avec signal recyclage)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [912, 64],
+      "parameters": {
+        "jsCode": "const sujets = $input.first().json;\nconst angleData = $('Code — Détermine angle du jour').item.json;\n\nconst FORMAT_PROMPTS = {\n  'Erreur + Solution': 'Slide 1 = problème choquant. Slides 2-6 alternent erreur courte et solution courte. Slide 7 = règle d\\'or. Slide 8 = CTA.',\n  'Avant / Après': 'Slide 1 = situation AVANT. Slide 2 = APRÈS. Slides 3-7 = étapes. Slide 8 = CTA.',\n  'Chiffres qui choquent': 'Slide 1 = chiffre le plus impactant. Slides 2-6 = 1 chiffre + explication. Slide 7 = signification. Slide 8 = CTA.',\n  'Checklist': 'Slide 1 = promesse. Slides 2-7 = 1 item actionnable. Slide 8 = CTA.',\n  'Tutoriel': 'Slide 1 = résultat final. Slides 2-7 = étapes numérotées. Slide 8 = CTA.',\n  'Concept simplifié': 'Slide 1 = définition. Slide 2 = problème résolu. Slides 3-5 = cas concrets. Slide 6 = quand NE PAS utiliser. Slide 7 = résumé. Slide 8 = CTA.'\n};\n\nif (Array.isArray(sujets) && sujets.length > 0) {\n  const sujet = sujets[Math.floor(Math.random() * sujets.length)];\n  return [{ json: {\n    sujet_id: sujet.id,\n    sujet: sujet.sujet,\n    hook: sujet.hook || '',\n    angle: sujet.angle,\n    format: sujet.format,\n    format_instructions: FORMAT_PROMPTS[sujet.format] || '',\n    jour: angleData.jour,\n    date: angleData.date,\n    nb_slides: 8,\n    nb_disponibles: sujets.length,\n    cycle_reset: false\n  }}];\n}\n\n// Tous les sujets épuisés → signal recyclage automatique\nreturn [{ json: {\n  sujet_id: null, sujet: null,\n  angle: angleData.angle, jour: angleData.jour, date: angleData.date,\n  nb_slides: 8, nb_disponibles: 0, cycle_reset: true\n}}];"
+      }
+    },
+    {
+      "id": "195da959-fa3c-41ec-b5fd-8e93c3d5c296",
+      "name": "IF — Recyclage nécessaire ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [912, 192],
+      "parameters": {
+        "conditions": {
+          "conditions": [{ "leftValue": "={{ $json.cycle_reset }}", "rightValue": true, "operator": { "type": "boolean", "operation": "true" } }]
+        }
+      }
+    },
+    {
+      "id": "73a711c6-7f0d-41e7-a8c1-51b854b5ef6f",
+      "name": "Supabase — RESET publiés → disponible",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [736, 336],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://YOUR_SUPABASE_URL/rest/v1/tgm_carousel_history?statut=eq.publié&angle=eq.{{ $('Code — Choisit sujet (avec signal recyclage)').item.json.angle }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "Content-Type", "value": "application/json" }, { "name": "Prefer", "value": "return=minimal" }] },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"statut\": \"disponible\", \"date_publication\": null}"
+      },
+      "credentials": { "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase — TGM" } }
+    },
+    {
+      "id": "afcb9d97-3c6f-4f50-9dfe-c879b9fef42a",
+      "name": "Gemini — Générer contenu slides",
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [1728, -448],
+      "parameters": {
+        "modelId": { "__rl": true, "value": "models/gemini-2.5-flash", "mode": "list" },
+        "messages": { "values": [{ "content": "Tu es directeur éditorial d'une agence B2B d'automatisation francophone. Génère un carrousel LinkedIn éducatif en JSON strict." }] },
+        "options": {
+          "systemMessage": "Réponds UNIQUEMENT avec un objet JSON valide. Structure : { slides: [{numero, titre, corps, prompt_image}], post_linkedin }. 8 slides max. Texte slide = MAX 15 mots.",
+          "maxTokens": 4096
+        }
+      },
+      "credentials": { "googleGeminiApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Google Gemini API" } }
+    },
+    {
+      "id": "be049150-cdb4-4634-8ba4-86e98a5d592f",
+      "name": "Code — Parse réponse Gemini",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1792, -256],
+      "parameters": {
+        "jsCode": "const raw = $input.first().json;\nlet text = '';\ntry { text = raw.candidates[0].content.parts[0].text; } catch(e) { throw new Error('Réponse Gemini invalide'); }\ntext = text.replace(/```json/gi, '').replace(/```/g, '').trim();\nlet data;\ntry { data = JSON.parse(text); } catch(e) { throw new Error('JSON parse error: ' + text.substring(0, 200)); }\nif (!data.slides || !Array.isArray(data.slides) || data.slides.length === 0) throw new Error('Pas de slides dans la réponse');\nconst topicData = $('Merge — Sujet final').item.json;\nreturn [{ json: {\n  ...data,\n  sujet_original: topicData.sujet,\n  angle: topicData.angle,\n  format: topicData.format,\n  nb_slides_generes: data.slides.length,\n  post_linkedin: data.post_linkedin || '',\n  slides: data.slides.map((slide, i) => ({\n    numero: slide.numero || (i + 1),\n    titre: slide.titre || '',\n    corps: slide.corps || '',\n    prompt_image: slide.prompt_image || `Educational carousel slide. Beige #FAF7F2. Bold title: \"${slide.titre}\". Red accent #D72638. 1:1 square.`,\n    filename: `TGM_slide_${String(slide.numero || (i+1)).padStart(2, '0')}.png`\n  }))\n}}];"
+      }
+    },
+    {
+      "id": "a23b1ffd-3a05-44a4-ad27-a9da20c9a366",
+      "name": "Split — 1 item par slide",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [1792, 432],
+      "parameters": { "fieldToSplitOut": "=slides", "options": { "destinationFieldName": "slides" } }
+    },
+    {
+      "id": "4b93b696-8bd1-492d-8ba7-2820c282928d",
+      "name": "fal.ai — Ideogram 3.0 (Image génération)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1808, 624],
+      "parameters": {
+        "method": "POST",
+        "url": "https://fal.run/fal-ai/ideogram/v3",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Authorization", "value": "=key {{ $env.FAL_AI_API_KEY }}" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ prompt: $json.slides.prompt_image, aspect_ratio: '1:1', rendering_speed: 'QUALITY', style_type: 'DESIGN' }) }}",
+        "options": { "timeout": 90000 }
+      }
+    },
+    {
+      "id": "20b4ea41-5933-4269-9c92-b992866e5818",
+      "name": "Code — Extrait URL image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1808, 768],
+      "parameters": {
+        "jsCode": "const falResponse = $input.first().json;\nconst slideData = $('Split — 1 item par slide').item.json.slide;\nconst imageUrl = falResponse?.images?.[0]?.url || falResponse?.image?.url || null;\nif (!imageUrl) throw new Error(`Pas d'URL image pour slide ${slideData.numero}`);\nreturn [{ json: { image_url: imageUrl, slide_numero: slideData.numero, slide_titre: slideData.titre, filename: slideData.filename } }];"
+      }
+    },
+    {
+      "id": "3a65c0b4-a440-440b-8bd3-5f4919a72b6c",
+      "name": "HTTP — Download image PNG",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1808, 912],
+      "parameters": {
+        "url": "={{ $json.image_url }}",
+        "options": { "response": { "response": { "responseFormat": "file" } } }
+      }
+    },
+    {
+      "id": "a9e599e2-c365-4bd7-8842-71894559c483",
+      "name": "Google Drive — Upload slide",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [1808, 1040],
+      "parameters": {
+        "name": "={{ $('Code — Extrait URL image').item.json.filename }}",
+        "folderId": { "__rl": true, "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID", "mode": "id" },
+        "options": {}
+      },
+      "credentials": { "googleDriveOAuth2Api": { "id": "YOUR_CREDENTIAL_ID", "name": "Google Drive OAuth2" } }
+    },
+    {
+      "id": "b37661cf-0c21-492c-afdc-05ff7d4a76b6",
+      "name": "Aggregate — Collecte tous les slides",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [1808, 1184],
+      "parameters": { "aggregate": "aggregateAllItemData", "options": {} }
+    },
+    {
+      "id": "f2a3aace-06a0-4fde-a1f3-5c136b9b5f75",
+      "name": "Telegram — Notif finale",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1808, 1328],
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=🎉 <b>Carrousel TGM prêt !</b>\n\n📌 <b>{{ $('Merge — Sujet final').item.json.sujet }}</b>\n\n📝 Post LinkedIn :\n<code>{{ $('Code — Parse réponse Gemini').item.json.post_linkedin }}</code>\n\n✅ Slides sur Google Drive — Assemble en PDF et publie sur LinkedIn",
+        "additionalFields": { "parse_mode": "HTML" }
+      },
+      "credentials": { "telegramApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Telegram Bot" } }
+    }
+  ],
+  "connections": {
+    "Schedule — Lun/Mer/Ven 8h": { "main": [[{ "node": "Supabase — SELECT sujets disponibles", "type": "main", "index": 0 }]] },
+    "Supabase — SELECT sujets disponibles": { "main": [[{ "node": "Code — Choisit sujet (avec signal recyclage)", "type": "main", "index": 0 }]] },
+    "Code — Choisit sujet (avec signal recyclage)": { "main": [[{ "node": "IF — Recyclage nécessaire ?", "type": "main", "index": 0 }]] },
+    "IF — Recyclage nécessaire ?": { "main": [[{ "node": "Supabase — RESET publiés → disponible", "type": "main", "index": 0 }], [{ "node": "Gemini — Générer contenu slides", "type": "main", "index": 0 }]] },
+    "Supabase — RESET publiés → disponible": { "main": [[{ "node": "Gemini — Générer contenu slides", "type": "main", "index": 0 }]] },
+    "Gemini — Générer contenu slides": { "main": [[{ "node": "Code — Parse réponse Gemini", "type": "main", "index": 0 }]] },
+    "Code — Parse réponse Gemini": { "main": [[{ "node": "Split — 1 item par slide", "type": "main", "index": 0 }]] },
+    "Split — 1 item par slide": { "main": [[{ "node": "fal.ai — Ideogram 3.0 (Image génération)", "type": "main", "index": 0 }]] },
+    "fal.ai — Ideogram 3.0 (Image génération)": { "main": [[{ "node": "Code — Extrait URL image", "type": "main", "index": 0 }]] },
+    "Code — Extrait URL image": { "main": [[{ "node": "HTTP — Download image PNG", "type": "main", "index": 0 }]] },
+    "HTTP — Download image PNG": { "main": [[{ "node": "Google Drive — Upload slide", "type": "main", "index": 0 }]] },
+    "Google Drive — Upload slide": { "main": [[{ "node": "Aggregate — Collecte tous les slides", "type": "main", "index": 0 }]] },
+    "Aggregate — Collecte tous les slides": { "main": [[{ "node": "Telegram — Notif finale", "type": "main", "index": 0 }]] }
+  },
+  "tags": ["content", "carousel", "fal-ai", "gemini", "google-drive", "supabase", "auto-recyclage"]
+}

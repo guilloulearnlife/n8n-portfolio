@@ -1,0 +1,324 @@
+{
+  "name": "TGM — Carousel Automatique (Claude AI + LinkedIn + Instagram)",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "nodes": [
+    {
+      "id": "1e38b175-ae4b-4526-bd9e-11fef8f6e1d8",
+      "name": "Schedule Trigger — Lundi 9h",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-2160, 2096],
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "triggerAtDay": [1], "triggerAtHour": 9 }]
+        }
+      }
+    },
+    {
+      "id": "354eb927-8162-4edc-bf5f-d2d8db9e3aab",
+      "name": "Supabase — Get Sujet",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [-1936, 2096],
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "tgm_carousel_history",
+        "limit": 1,
+        "filters": {
+          "conditions": [{ "keyName": "statut", "condition": "eq", "keyValue": "disponible" }]
+        }
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase — TGM" }
+      }
+    },
+    {
+      "id": "05bcda14-e5e3-47c6-b820-d9a81eb3aa85",
+      "name": "IF — Sujet dispo ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-1728, 2096],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "exists", "singleValue": true }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ad39c924-ce35-4a26-a3b9-8c87cb0c9c34",
+      "name": "Telegram — Rien à publier",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-1552, 2256],
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "ℹ️ Carousel: aucun sujet disponible cette semaine.",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "telegramApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Telegram Bot" }
+      }
+    },
+    {
+      "id": "8589841f-f0d8-42f4-ac3a-fc0b60325432",
+      "name": "Claude — Générer contenu carousel",
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [-1536, 1984],
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-5-20250929",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Erstelle einen LinkedIn-Karussell-Inhalt für folgendes Thema:\n\nSujet: {{ $json.sujet }}\n\nGib exakt dieses JSON zurück (alle 7 slides im slides-Array):\n{\n  \"post_text\": \"[LinkedIn-Post auf Deutsch, 300-500 Zeichen, starker Hook, 3-5 Hashtags]\",\n  \"cover_headline\": \"[Titel 5-8 Wörter]\",\n  \"cover_subtitle\": \"[Untertitel 3-5 Wörter, GROSSBUCHSTABEN]\",\n  \"slides\": [\n    {\"num\": \"01\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"02\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"03\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"04\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"05\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"06\", \"headline\": \"[max 6 Wörter]\", \"body\": \"[2-3 Zeilen]\", \"node1\": \"[1-2 Wörter]\", \"node2\": \"[1-2 Wörter]\", \"node3\": \"[1-2 Wörter]\"},\n    {\"num\": \"Ergebnis\", \"headline\": \"Das Ergebnis:\", \"body\": \"[Zusammenfassung, 2 Zeilen]\", \"node1\": \"[Metrik 1]\", \"node2\": \"[Metrik 2]\", \"node3\": \"[Metrik 3]\"}\n  ],\n  \"cta_headline\": \"[Starke Aussage 5-7 Wörter]\",\n  \"cta_subtext\": \"[Engagement-Frage max 10 Wörter]\",\n  \"cta_badge\": \"Folg mir für wöchentliche Tipps\"\n}"
+            }
+          ]
+        },
+        "options": {
+          "system": "Du bist ein LinkedIn-Content-Experte für eine B2B-Automatisierungsagentur.\nStack: n8n, Supabase, Claude AI, WhatsApp via Evolution API.\nZielgruppe: Deutschsprachige Fachleute und Unternehmer.\nTon: Lehrreich, authentisch, persönlich — kein Corporate-Sprech.\nWICHTIG: Antworte NUR mit validem JSON — kein Markdown, keine Backticks.",
+          "maxTokens": 4096
+        }
+      },
+      "credentials": {
+        "anthropicApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Anthropic API" }
+      }
+    },
+    {
+      "id": "d5082721-7999-4658-9050-1cadb63a19ad",
+      "name": "Code — Parse Claude + prépare slides",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-1152, 1984],
+      "parameters": {
+        "jsCode": "// Parse la réponse Claude et prépare les 9 slides pour Templated.io\nconst raw = $input.first().json.content[0].text || '';\n\nlet c;\ntry {\n  const clean = raw.replace(/^```json\\s*/i, '').replace(/```\\s*$/i, '').trim();\n  c = JSON.parse(clean);\n} catch(e) {\n  throw new Error('Parse erreur: ' + e.message + ' | Début: ' + raw.substring(0, 300));\n}\n\nconst sujet = $('Supabase — Get Sujet').first().json;\n\n// IDs de templates Templated.io — remplacer par vos propres IDs\nconst TPL_COVER    = 'YOUR_COVER_TEMPLATE_ID';\nconst TPL_STANDARD = 'YOUR_STANDARD_TEMPLATE_ID';\nconst TPL_CTA      = 'YOUR_CTA_TEMPLATE_ID';\n\n// Wrapper pour format Templated.io : { layerName: { text: \"valeur\" } }\nfunction wrapForTempled(obj) {\n  const wrapped = {};\n  for (const [key, value] of Object.entries(obj)) {\n    wrapped[key] = { text: String(value) };\n  }\n  return wrapped;\n}\n\nconst slides = [\n  {\n    slide: 1,\n    template_id: TPL_COVER,\n    layers: wrapForTempled({ headline: c.cover_headline, subtitle: c.cover_subtitle })\n  },\n  ...c.slides.map((s, i) => ({\n    slide: i + 2,\n    template_id: TPL_STANDARD,\n    layers: wrapForTempled({\n      'slide-number': s.num,\n      headline: s.headline,\n      'body-text': s.body,\n      'node-1': s.node1,\n      'node-2': s.node2,\n      'node-3': s.node3\n    })\n  })),\n  {\n    slide: 9,\n    template_id: TPL_CTA,\n    layers: wrapForTempled({\n      'cta-headline': c.cta_headline,\n      'cta-subtext': c.cta_subtext,\n      'cta-badge-text': c.cta_badge\n    })\n  }\n];\n\nreturn slides.map(s => ({\n  json: {\n    templated_body: JSON.stringify({ template: s.template_id, format: 'png', layers: s.layers }),\n    slide: s.slide,\n    carousel_id: sujet.id,\n    post_text: c.post_text\n  }\n}));"
+      }
+    },
+    {
+      "id": "6c00dedd-1ecb-40ae-9c57-c77393155421",
+      "name": "Templated.io — Générer slide PNG",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-944, 1984],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.templated.io/v1/render",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": { "parameters": [{ "name": "Content-Type", "value": "application/json" }] },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.templated_body }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpBearerAuth": { "id": "YOUR_CREDENTIAL_ID", "name": "Templated.io API" }
+      }
+    },
+    {
+      "id": "622980fb-6f05-4d36-a299-58449ac85e49",
+      "name": "Code — Collecte PNG URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-768, 1984],
+      "parameters": {
+        "jsCode": "// Collecte les 9 URLs PNG générées par Templated.io\nconst items = $input.all();\nconst png_urls = items.map(i => i.json.url).filter(Boolean);\n\nif (png_urls.length !== 9) {\n  console.warn(`Attention: ${png_urls.length} slides générés au lieu de 9`);\n}\n\nconst parseNode = $('Code — Parse Claude + prépare slides');\nconst carousel_id = parseNode.first().json.carousel_id;\nconst post_text = parseNode.first().json.post_text;\n\nreturn [{ json: { png_urls, carousel_id, post_text } }];"
+      }
+    },
+    {
+      "id": "c57b7bb2-8d61-4637-a3ba-687d2ccbcdbd",
+      "name": "Code — Éclate URLs en items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-528, 1984],
+      "parameters": {
+        "jsCode": "// Éclate les 9 URLs en 9 items séparés pour téléchargement parallèle\nconst png_urls = $input.first().json.png_urls;\nconst carousel_id = $input.first().json.carousel_id;\nconst post_text = $input.first().json.post_text;\n\nreturn png_urls.map((url, index) => ({\n  json: { url, index, carousel_id, post_text }\n}));"
+      }
+    },
+    {
+      "id": "c7b13e37-67ea-4766-bca8-17a7906e9ab3",
+      "name": "HTTP Request — Télécharge PNG",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [-320, 1984],
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": { "response": { "response": { "responseFormat": "file" } } }
+      }
+    },
+    {
+      "id": "a09baf56-1bed-4326-9b9d-9f37ee2cab58",
+      "name": "Code — Assemble images binaires",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-128, 1984],
+      "parameters": {
+        "jsCode": "// Rassemble les 9 images téléchargées en un seul item avec binary\nconst items = $input.all();\n\nif (items.length !== 9) {\n  throw new Error(`Attendu 9 images, reçu ${items.length}`);\n}\n\nconst carousel_id = items[0].json.carousel_id;\nconst post_text = items[0].json.post_text;\nconst png_urls = $('Code — Collecte PNG URLs').first().json.png_urls;\n\nconst binary = {};\nitems.forEach((item, i) => { binary[`image_${i}`] = item.binary.data; });\n\nreturn [{ json: { carousel_id, post_text, image_count: items.length, png_urls }, binary }];"
+      }
+    },
+    {
+      "id": "2b9909d4-8748-4239-bf0d-416f84132470",
+      "name": "Supabase — Sauvegarde slides",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [64, 1984],
+      "parameters": {
+        "operation": "update",
+        "tableId": "tgm_carousel_history",
+        "filters": {
+          "conditions": [{ "keyName": "id", "condition": "eq", "keyValue": "={{ $('Supabase — Get Sujet').item.json.id }}" }]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "png_urls", "fieldValue": "={{ JSON.stringify($json.png_urls) }}" },
+            { "fieldId": "created_at", "fieldValue": "={{ $now.toISO() }}" }
+          ]
+        }
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase — TGM" }
+      }
+    },
+    {
+      "id": "ea21787c-92ae-43b0-90dd-d339adca8684",
+      "name": "Instagram — Publier carousel",
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [240, 2112],
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "YOUR_INSTAGRAM_ACCOUNT_ID",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              { "name": "image_url", "value": "={{ $('Code — Assemble images binaires').item.json.png_urls[0] }}" },
+              { "name": "caption", "value": "={{ $('Code — Assemble images binaires').item.json.post_text }}" }
+            ]
+          }
+        }
+      },
+      "credentials": {
+        "facebookGraphApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Facebook/Instagram Graph API" }
+      }
+    },
+    {
+      "id": "35e01dd4-6c25-489f-b21a-0f5ab58bc105",
+      "name": "LinkedIn — Publier post",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [800, 1808],
+      "parameters": {
+        "person": "YOUR_LINKEDIN_PERSON_URN",
+        "text": "={{ $('Code — Assemble images binaires').item.json.post_text }}",
+        "shareMediaCategory": "=image",
+        "additionalFields": {
+          "originalUrl": "={{ $('Code — Assemble images binaires').item.json.png_urls }}"
+        }
+      },
+      "credentials": {
+        "linkedInOAuth2Api": { "id": "YOUR_CREDENTIAL_ID", "name": "LinkedIn OAuth2" }
+      }
+    },
+    {
+      "id": "f6a9f0c8-c6e9-40f3-b0ce-7ce5ea264e31",
+      "name": "Supabase — UPDATE statut publié",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [672, 2112],
+      "parameters": {
+        "operation": "update",
+        "tableId": "tgm_carousel_history",
+        "filters": {
+          "conditions": [{ "keyName": "id", "condition": "eq", "keyValue": "={{ $('Supabase — Get Sujet').item.json.id }}" }]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            { "fieldId": "statut", "fieldValue": "publié" },
+            { "fieldId": "published_at", "fieldValue": "={{ $now.toISO() }}" }
+          ]
+        }
+      },
+      "credentials": {
+        "supabaseApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Supabase — TGM" }
+      }
+    },
+    {
+      "id": "525a9c54-8a49-435a-bb57-2794c21d404b",
+      "name": "Telegram — Confirmation",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [880, 2112],
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=✅ *Carousel publié !*\n\n🤖 Contenu: Claude AI\n🎨 Design: Templated.io (9 slides)\n📘 LinkedIn + 📸 Instagram\n📅 {{ $now.toFormat('dd/MM/yyyy HH:mm') }}",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "credentials": {
+        "telegramApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Telegram Bot" }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger — Lundi 9h": {
+      "main": [[{ "node": "Supabase — Get Sujet", "type": "main", "index": 0 }]]
+    },
+    "Supabase — Get Sujet": {
+      "main": [[{ "node": "IF — Sujet dispo ?", "type": "main", "index": 0 }]]
+    },
+    "IF — Sujet dispo ?": {
+      "main": [
+        [{ "node": "Claude — Générer contenu carousel", "type": "main", "index": 0 }],
+        [{ "node": "Telegram — Rien à publier", "type": "main", "index": 0 }]
+      ]
+    },
+    "Claude — Générer contenu carousel": {
+      "main": [[{ "node": "Code — Parse Claude + prépare slides", "type": "main", "index": 0 }]]
+    },
+    "Code — Parse Claude + prépare slides": {
+      "main": [[{ "node": "Templated.io — Générer slide PNG", "type": "main", "index": 0 }]]
+    },
+    "Templated.io — Générer slide PNG": {
+      "main": [[{ "node": "Code — Collecte PNG URLs", "type": "main", "index": 0 }]]
+    },
+    "Code — Collecte PNG URLs": {
+      "main": [[{ "node": "Code — Éclate URLs en items", "type": "main", "index": 0 }]]
+    },
+    "Code — Éclate URLs en items": {
+      "main": [[{ "node": "HTTP Request — Télécharge PNG", "type": "main", "index": 0 }]]
+    },
+    "HTTP Request — Télécharge PNG": {
+      "main": [[{ "node": "Code — Assemble images binaires", "type": "main", "index": 0 }]]
+    },
+    "Code — Assemble images binaires": {
+      "main": [[{ "node": "Supabase — Sauvegarde slides", "type": "main", "index": 0 }]]
+    },
+    "Supabase — Sauvegarde slides": {
+      "main": [
+        [{ "node": "Instagram — Publier carousel", "type": "main", "index": 0 }],
+        [{ "node": "LinkedIn — Publier post", "type": "main", "index": 0 }]
+      ]
+    },
+    "Instagram — Publier carousel": {
+      "main": [[{ "node": "Supabase — UPDATE statut publié", "type": "main", "index": 0 }]]
+    },
+    "Supabase — UPDATE statut publié": {
+      "main": [[{ "node": "Telegram — Confirmation", "type": "main", "index": 0 }]]
+    }
+  },
+  "tags": ["social-media", "carousel", "linkedin", "instagram", "claude-ai", "templated"]
+}

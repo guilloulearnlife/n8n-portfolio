@@ -1,0 +1,112 @@
+{
+  "name": "CRM Automatisierung — Kontaktformular → Airtable + WhatsApp",
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "nodes": [
+    {
+      "id": "c444c68f-e5b3-4c74-8a72-687b17a9a709",
+      "name": "Webhook — Kontaktformular",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-208, 0],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "0a51c800-a348-4f16-b533-6442a3e04959",
+      "name": "Code — Extrait données formulaire",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [16, 0],
+      "parameters": {
+        "jsCode": "// Extrait les données du body du webhook\nfor (const item of $input.all()) {\n  item.json = item.json.body;\n}\nreturn $input.all();"
+      }
+    },
+    {
+      "id": "f609cb2d-d63a-4940-8afb-03cf714bf411",
+      "name": "Airtable — Créer contact CRM",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [208, 0],
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "YOUR_AIRTABLE_BASE_ID", "mode": "id" },
+        "table": { "__rl": true, "value": "YOUR_AIRTABLE_TABLE_ID", "mode": "id" },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "schema": [
+            { "id": "name", "displayName": "name", "type": "string" },
+            { "id": "email", "displayName": "email", "type": "string" },
+            { "id": "phone", "displayName": "phone", "type": "string" },
+            { "id": "company", "displayName": "company", "type": "string" },
+            { "id": "message", "displayName": "message", "type": "string" },
+            { "id": "service", "displayName": "service", "type": "string" },
+            { "id": "timestamp", "displayName": "timestamp", "type": "dateTime" },
+            { "id": "source", "displayName": "source", "type": "string" }
+          ]
+        }
+      },
+      "credentials": {
+        "airtableTokenApi": { "id": "YOUR_CREDENTIAL_ID", "name": "Airtable API" }
+      }
+    },
+    {
+      "id": "fa2a56bd-b7b4-4200-aa93-0eb5adc80906",
+      "name": "Code — Normaliser numéro téléphone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [432, 0],
+      "parameters": {
+        "jsCode": "// Normalise le numéro de téléphone pour Evolution API\n// Supporte les formats DE (49) et CM (237)\nconst input = $json;\nlet phoneInput = input.phone || (input.fields ? input.fields.phone : '') || '';\n\nlet raw = phoneInput.toString().replace(/[^0-9]/g, '');\nif (raw.startsWith('00')) raw = raw.slice(2);\n\nlet finalNumber = '';\n\n// Allemagne (49)\nif (raw.startsWith('49')) {\n  finalNumber = raw;\n} else if (raw.startsWith('0') && (raw.length === 10 || raw.length === 11)) {\n  finalNumber = '49' + raw.slice(1);\n}\n// Cameroun (237)\nelse if (raw.startsWith('237')) {\n  finalNumber = raw;\n} else if (raw.match(/^[236][0-9]{8}$/)) {\n  finalNumber = '237' + raw;\n} else {\n  finalNumber = raw;\n}\n\nreturn { ...input, normalizedNumber: finalNumber, debug_raw: raw };"
+      }
+    },
+    {
+      "id": "8d284f4c-941a-482a-994d-e0ae8107ab50",
+      "name": "WhatsApp — Envoyer confirmation client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [656, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://YOUR_EVOLUTION_API_URL/message/sendText/YOUR_INSTANCE_NAME",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{ "name": "apikey", "value": "={{ $env.EVOLUTION_API_KEY }}" }]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"number\": \"{{ $json.normalizedNumber }}\",\n  \"text\": \"👋 Bonjour {{ $json.fields.name }}, merci pour votre demande concernant {{ $json.fields.service }}. Nous vous répondrons dans les 24h.\",\n  \"delay\": 0\n}"
+      }
+    },
+    {
+      "id": "f4c792f2-f401-4795-9975-0830e2d5a80a",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [848, 0],
+      "parameters": { "options": {} }
+    }
+  ],
+  "connections": {
+    "Webhook — Kontaktformular": {
+      "main": [[{ "node": "Code — Extrait données formulaire", "type": "main", "index": 0 }]]
+    },
+    "Code — Extrait données formulaire": {
+      "main": [[{ "node": "Airtable — Créer contact CRM", "type": "main", "index": 0 }]]
+    },
+    "Airtable — Créer contact CRM": {
+      "main": [[{ "node": "Code — Normaliser numéro téléphone", "type": "main", "index": 0 }]]
+    },
+    "Code — Normaliser numéro téléphone": {
+      "main": [[{ "node": "WhatsApp — Envoyer confirmation client", "type": "main", "index": 0 }]]
+    },
+    "WhatsApp — Envoyer confirmation client": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    }
+  },
+  "tags": ["crm", "airtable", "whatsapp", "contact-form"]
+}
